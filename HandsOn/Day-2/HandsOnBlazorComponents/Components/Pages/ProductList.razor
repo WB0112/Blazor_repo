@@ -1,0 +1,49 @@
+﻿@page "/products"
+@using HandsOnBlazorComponents.Models;
+<h3>ProductList</h3>
+<div class="container">
+    <table class="table table-bordered">
+        <thead>
+            <tr class="table-dark">
+                <th>Id</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Stock</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var item in products)
+            {
+                @if (item.Stock > 10)
+                {
+                <tr class="table-info">
+                    <td>@item.Id</td>
+                    <td>@item.Name</td>
+                    <td>@item.Price</td>
+                    <td>@item.Stock</td>
+                </tr>
+                }
+                else
+                {
+                    <tr class="table-warning">
+                        <td>@item.Id</td>
+                        <td>@item.Name</td>
+                        <td>@item.Price</td>
+                        <td>@item.Stock</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+@code {
+    private List<Product> products = new List<Product>
+    {
+        new Product(){Id=23,Name="Bottle",Price=340,Stock=20},
+        new Product(){Id=76,Name="Book",Price=40,Stock=10},
+        new Product(){Id=45,Name="Pen",Price=30,Stock=50},
+        new Product(){Id=89,Name="Pencil",Price=30,Stock=20},
+        new Product(){Id=12,Name="Mouse",Price=400,Stock=10},
+    };
+}

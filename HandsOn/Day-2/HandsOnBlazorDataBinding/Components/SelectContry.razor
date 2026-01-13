@@ -1,0 +1,13 @@
+﻿<h3>SelectContry</h3>
+<select @bind="SelectedCountry">
+    <option value="">--Select---</option>
+    <option value="Inida">India</option>
+    <option value="China">China</option>
+    <option value="Japan">Japan</option>
+    <option value="Rusia">Rusia</option>
+</select>
+<p> You Selected:@SelectedCountry</p>
+
+@code {
+    string SelectedCountry = string.Empty;
+}

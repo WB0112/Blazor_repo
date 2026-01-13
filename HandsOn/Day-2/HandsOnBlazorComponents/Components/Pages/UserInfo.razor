@@ -1,0 +1,26 @@
+﻿@page "/userinfo"
+<h3>UserInfo</h3>
+<div class="container">
+    <pre>
+        Name:@userName
+        Age:@age
+        Active:@isActive
+        Status:@(isActive ? "Active" : "Inactive")
+        Status:@Message()
+        Hobies:@foreach(var item in hobies)
+              {
+        <li> @item </li>
+              }
+    </pre>
+</div>
+
+@code {
+    private string userName = "Virat";
+    private int age = 35;
+    private bool isActive = true;
+    private string[] hobies = new string[] { "Cricket", "Reading", "Travelling" };
+    private string Message()
+    {
+        return isActive ? "Active" : "Inactive";
+    }
+}

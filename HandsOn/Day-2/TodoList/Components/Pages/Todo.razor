@@ -1,0 +1,62 @@
+﻿@page "/todo"
+@using TodoList.Models
+@rendermode InteractiveServer
+<h3>Todo</h3>
+<div class="container">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Is Done</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in todoItems)
+            {
+                <tr>
+                    <td>@item.Title</td>
+                    <td>
+                        <input type="checkbox" @bind="item.IsDone" />
+                    </td>
+                    <td>
+                        <button class="btn btn-primary" @onclick="() => EditTodo(item)">Complete</button>
+                        <button class="btn btn-info" @onclick="() => DeleteTodo(item)">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<hr />
+<input placeholder="Something todo" @bind="newTodoTitle" />
+<button class="btn btn-primary" @onclick="AddTodo">Add todo</button>
+
+@code {
+    private string? newTodoTitle;
+    private List<TodoItem> todoItems = new List<TodoItem>();
+    private void AddTodo()
+    {
+        //Add Todo to the List
+        if (!string.IsNullOrEmpty(newTodoTitle))
+        {
+            todoItems.Add(new TodoItem() { Title = newTodoTitle });
+            newTodoTitle = string.Empty;
+        }
+    }
+    private void EditTodo(TodoItem item)
+    {
+        for(int i=0;i<todoItems.Count;i++)
+        {
+            if(todoItems[i]==item)
+            {
+                todoItems[i].IsDone = true;
+                break;
+            }
+        }
+    }
+    private void DeleteTodo(TodoItem item)
+    {
+        todoItems.Remove(item);
+    }
+}

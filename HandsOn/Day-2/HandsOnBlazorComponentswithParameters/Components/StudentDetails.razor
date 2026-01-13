@@ -1,0 +1,28 @@
+﻿<h3>StudentDetails</h3>
+<div class="container">
+    <pre>
+        Name:@Name
+        Class:@Class
+    @if (IsPass)
+    {
+        <pre>
+        Result:"Pass"
+        Marks:@Marks
+        </pre>
+    }
+    else
+    {
+        <pre>
+            Result:"Fail"
+        </pre>
+    }
+    </pre>
+</div>
+
+@code {
+    [Parameter] public string Name { get; set; }
+    [Parameter] public string Class { get; set; }
+    [Parameter] public int Marks { get; set; }
+    [Parameter] public bool IsPass { get; set; }
+
+}

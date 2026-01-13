@@ -1,0 +1,11 @@
+﻿@rendermode InteractiveWebAssembly
+<div class="container">
+    @* Enter Name:<input @bind="@name" /> *@
+    Enter Name:<input @bind="@name" @bind:event="oninput" />
+    <h3>Hello,@name</h3>
+</div>
+
+
+@code {
+    private string name="Virat";
+}

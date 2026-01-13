@@ -1,0 +1,44 @@
+﻿<h3>Login</h3>
+<div class="container">
+    <table class="table">
+        <tr>
+            <td>Username</td>
+            <td><input type="text" @bind="user.Username" /></td>
+        </tr>
+        <tr>
+            <td>Password</td>
+            <td><input type="password" @bind="user.Password" /></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="submit" @onclick="Validate" />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <label>@errMsg</label>
+            </td>
+        </tr>
+    </table>
+</div>
+
+@code {
+    private User user = new User();
+    private string errMsg = string.Empty;
+    private void Validate()
+    {
+        if(user.Username=="Virat" && user.Password=="12345")
+        {
+            errMsg = "Hello " + user.Username;
+        }
+        else
+        {
+            errMsg = "Invalid Credentials";
+        }
+    }
+    public class User
+    {
+        public string Username{ get; set; }
+        public string Password{ get; set; }
+    }
+}

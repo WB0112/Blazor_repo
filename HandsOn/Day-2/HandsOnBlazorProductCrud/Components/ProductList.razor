@@ -1,0 +1,69 @@
+﻿@page "/productlist"
+@using HandsOnBlazorProductCrud.Models
+@inject HandsOnBlazorProductCrud.Services.ProductService productService
+@rendermode InteractiveServer
+<h3>ProductList</h3>
+<div class="container">
+    <div class="row">
+        <div class="col-4">
+            <input placeholder="Id" @bind="product.Id" class="form-control" />
+            <input placeholder="Name" @bind="product.Name" class="form-control" />
+            <input placeholder="Price" @bind="product.Price" class="form-control" />
+            <button class="btn btn-primary m-1" @onclick="Add">Add</button>
+            <button class="btn btn-warning m-1" @onclick="Edit">Edit</button>
+            <button class="btn btn-danger m-1" @onclick="Delete">Delete</button>
+        </div>
+        <div class="col-8">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var p in products)
+                    {
+                        <tr>
+                            <td>@p.Id</td>
+                            <td>@p.Name</td>
+                            <td>@p.Price</td>
+                            <td>
+                                <button class="btn btn-info" @onclick="@(() => GetProduct(p.Id))">Search</button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@code {
+    private Product product = new Product();
+    private List<Product> products = new List<Product>();
+    protected override void OnInitialized()
+    {
+        products = productService.GetAllProducts();
+    }
+    private void Add()
+    {
+        productService.AddProduct(product);
+        product = new Product();
+    }
+    private void Edit()
+    {
+        productService.UpdateProduct(product);
+    }
+    private void Delete()
+    {
+        productService.DeleteProduct(product.Id);
+        product = new Product();
+    }
+    private void GetProduct(int id)
+    {
+        product = productService.GetProductById(id);
+    }  
+}

@@ -1,0 +1,12 @@
+﻿@rendermode InteractiveServer
+<h3>Welcome to Blazor App!!</h3>
+<button @onclick="UpdateMesage">Click Me</button>
+<p>@message</p>
+
+@code {
+    private string message = "This is a simple Blazor component.";
+    public void UpdateMesage()
+    {
+        message = "Hey Guys Good Morning!!";
+    }
+}

@@ -1,0 +1,25 @@
+﻿@page "/userdetails"
+<h3>UserDetails</h3>
+<div class="container">
+    <p>Name:@user.Name</p>
+    <p>Age:@user.Age</p>
+    <p>Email:@user.Email</p>
+    <p>Status:@(user.IsActive?"Active":"InActive")</p>
+</div>
+
+@code {
+    private User user = new User
+    {
+        Name="Karan",
+        Age = 28,
+        Email = "karan@example.com",
+        IsActive = true
+    };
+    public class User
+    {
+        public string Name{ get; set;  }
+        public int Age { get; set; }
+        public string Email { get; set; }
+        public bool IsActive { get; set; }
+    }
+}

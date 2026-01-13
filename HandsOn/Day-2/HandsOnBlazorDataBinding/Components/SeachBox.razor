@@ -1,0 +1,6 @@
+﻿<h3>SeachBox</h3>
+<input @bind="searchText" @bind:event="oninput" />
+<p>Seaching for:@searchText</p>
+@code {
+    [Parameter] public string searchText{ get; set; }
+}

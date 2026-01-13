@@ -1,0 +1,22 @@
+﻿@page "/product-details"
+@using HandsOnBlazorComponents.Models
+<h3>ProductDetails</h3>
+<div class="container">
+    <pre>
+        ID:@product.Id
+        Name:@product.Name
+        Price:@product.Price
+        Stock:@product.Stock
+    </pre>
+</div>
+
+@code {
+    //Initiate proudct model
+    private Product product = new Product
+    {
+        Id=34034,
+        Name="Laptop",
+        Price=89000,
+        Stock=10
+    };
+}

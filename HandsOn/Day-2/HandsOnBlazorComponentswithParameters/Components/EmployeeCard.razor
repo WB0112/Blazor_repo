@@ -1,0 +1,22 @@
+﻿@using HandsOnBlazorComponentswithParameters.Models
+<h3>EmployeeCard</h3>
+<div class="container">
+    <pre>
+        ID:@Employee.Id
+        Name:@Employee.Name
+    </pre>
+</div>
+
+@code {
+
+    [Parameter]
+    public Employee Employee
+    {
+        get;
+        set;
+    } = new Employee
+        {
+            Id = 340932,
+            Name = "Karan"
+        };
+}
