@@ -1,0 +1,10 @@
+﻿
+<Child1 OnSave="HandleSave" />
+<p>Status: @status</p>
+@code {
+    string status = string.Empty;
+    void HandleSave(string message)
+    {
+        status = message;
+    }
+}

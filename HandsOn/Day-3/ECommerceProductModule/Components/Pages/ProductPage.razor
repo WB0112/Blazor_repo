@@ -1,0 +1,21 @@
+﻿<h3>Product Management</h3>
+@inject ECommerceProductModule.Services.AppState State
+@implements IDisposable
+<ProductForm />
+<ProductList />
+
+@code {
+    protected override void OnInitialized()
+    {
+        State.OnChange += Refresh;
+        State.Load(); // Initial load of products
+    }
+    public void Refresh()
+    {
+        InvokeAsync(StateHasChanged);//re-render the component UI
+    }
+    public void Dispose()
+    {
+        State.OnChange -= Refresh;
+    }
+}

@@ -1,0 +1,11 @@
+﻿<h3>Parent</h3>
+<Child5 @ref="child" />
+<button @onclick="CallChildMethod">Call Child Method</button>
+
+@code {
+    Child5 child;
+    void CallChildMethod()
+    {
+        child.SendMessage();
+    }
+}

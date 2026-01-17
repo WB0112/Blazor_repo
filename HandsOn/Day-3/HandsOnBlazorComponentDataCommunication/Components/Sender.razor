@@ -1,0 +1,10 @@
+﻿@inject AppState State;
+<button @onclick="SendMessage">Send Message</button>
+<h3>Sender</h3>
+
+@code {
+    void SendMessage()
+    {
+        State.setMessage("Hello from Sender");
+    }   
+}

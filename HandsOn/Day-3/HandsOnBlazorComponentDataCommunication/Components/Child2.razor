@@ -1,0 +1,8 @@
+﻿<h3>Child2</h3>
+<input value="@Value" @onchange="e => ValueChanged.InvokeAsync(e.Value.ToString())" />
+
+@code {
+    [Parameter] public string Value { get; set; }
+    [Parameter] public EventCallback<string> 
+    ValueChanged { get; set; }
+}

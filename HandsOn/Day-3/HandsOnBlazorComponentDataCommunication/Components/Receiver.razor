@@ -1,0 +1,11 @@
+﻿@inject AppState State;
+<h3>Receiver</h3>
+<p>Message from Sender: @State.Message</p>
+
+@code {
+    protected override void OnInitialized() //invoked when the component is initialized
+    {
+        State.OnChange += StateHasChanged; //Notify the component to re-render
+
+    }
+}

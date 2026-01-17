@@ -1,0 +1,48 @@
+﻿@using ECommerceProductModule.Models
+@inject ECommerceProductModule.Services.AppState State
+@implements IDisposable
+<h4>@(State.SelectedProduct==null?"Add Product":"Edit Product")</h4>
+<input class="form-control mb-2" placeholder="Name" @bind="product.Name" />
+<input class="form-control mb-2" placeholder="Price" type="number" @bind="product.Price" />
+<button class="btn btn-primary" @onclick="Save">Save</button>
+
+@code {
+    Product product = new Product();
+    protected override void OnInitialized()
+    {
+        State.OnChange += SyncForm;
+    }
+  
+    public void Dispose()
+    {
+        State.OnChange -= SyncForm;
+    }
+    void SyncForm()
+    {
+        if(State.SelectedProduct==null)
+        {
+            product = new Product();
+        }
+        else
+        {
+            product = new Product
+            {
+                Id = State.SelectedProduct.Id,
+                Name = State.SelectedProduct.Name,
+                Price = State.SelectedProduct.Price
+            };
+        }
+        InvokeAsync(StateHasChanged);
+    }
+    void Save()
+    {
+        if(product.Id==0)
+        {
+            State.Add(product);
+        }
+        else
+        {
+            State.Update(product);
+        }
+    }
+}

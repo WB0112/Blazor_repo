@@ -1,0 +1,11 @@
+﻿<button @onclick="Save">Save</button>
+
+@code {
+    [Parameter] public EventCallback<string> OnSave { get; set; }
+    private async Task Save()
+    {
+        // Simulate some save operation
+        // After saving, invoke the callback to notify the parent component
+        await OnSave.InvokeAsync("Saved Successfully");
+    }
+}
