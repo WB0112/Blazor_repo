@@ -1,0 +1,11 @@
+﻿<h3>InputBox</h3>
+<input class="form-control" value="@Value" @oninput="OnInputChanged" />
+
+@code {
+    [Parameter] public string Value{ get; set; }
+    [Parameter] public EventCallback<string> ValueChanged{ get; set; }
+    async Task OnInputChanged(ChangeEventArgs e)
+    {
+        await ValueChanged.InvokeAsync(e.Value?.ToString());
+    }
+}

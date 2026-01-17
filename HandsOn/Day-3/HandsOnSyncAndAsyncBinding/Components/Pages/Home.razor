@@ -1,0 +1,15 @@
+﻿@page "/"
+@rendermode InteractiveServer
+@* <UserRegister /> *@
+@* <UserEmail /> *@
+@* <UpperCaseTransForm /> *@
+<InputBox @bind-Value="CustromerName"   />
+<p>@CustromerName</p>
+@code
+{
+    string CustromerName = "";
+    // void ChangeName()
+    // {
+    //     CustromerName = "Viart";
+    // }
+}

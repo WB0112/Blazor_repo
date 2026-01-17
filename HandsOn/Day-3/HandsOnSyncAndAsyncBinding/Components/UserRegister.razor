@@ -1,0 +1,7 @@
+﻿<h3>UserRegister</h3>
+<input class="form-control" @bind="UserName" @bind:event="oninput" />
+<p>Enter Name:<b>@UserName</b></p>
+
+@code {
+    string UserName = "";
+}

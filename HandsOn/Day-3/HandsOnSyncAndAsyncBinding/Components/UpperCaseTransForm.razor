@@ -1,0 +1,13 @@
+﻿<h3>UpperCaseTransForm</h3>
+<input class="form-control" @bind="Name" />
+<p>@Name</p>
+
+@code {
+
+    string _name = "";
+    public string Name
+    {
+        get => _name;
+        set => _name = value.ToUpper();
+    }
+}

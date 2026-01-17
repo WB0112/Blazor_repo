@@ -1,0 +1,16 @@
+﻿@* Async Save After User Input *@
+@* Performing asynchronous actions after binding *@
+<input class="form-control" @bind="Email" />
+<button class="btn btn-primary" @onclick="SaveEmailAsync">Save</button>
+<h3>UserEmail</h3>
+<p>Status:@Status</p>
+@code {
+    string Email = "";
+    string Status = "Idle";
+    async Task SaveEmailAsync()
+    {
+        Status = "Saving....";
+        await Task.Delay(5000);//Simulate API Call
+        Status = "Saved Successfully";
+    }
+}
