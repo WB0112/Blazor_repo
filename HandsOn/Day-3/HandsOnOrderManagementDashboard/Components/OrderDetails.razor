@@ -1,0 +1,21 @@
+﻿@using HandsOnOrderManagementDashboard.Models
+<h3>OrderDetails</h3>
+<p><strong>Customer:</strong>@Order.CustomerName</p>
+<p><strong>Amount:</strong>@Order.Amount</p>
+<button class="btn btn-success" @onclick="Approve">Approve</button>
+<button class="btn btn-danger" @onclick="Reject">Reject</button>
+
+
+@code {
+    [Parameter]public Order Order{ get; set; }
+    [Parameter] public EventCallback<Order> OnStatusUpdated{ get; set; }
+    void Approve() => ChangeStatus("Approved");
+    void Reject() => ChangeStatus("Rejected");
+
+    async Task ChangeStatus(string status)
+    {
+        Order.Status = status;
+        await OnStatusUpdated.InvokeAsync(Order);
+    }
+
+}

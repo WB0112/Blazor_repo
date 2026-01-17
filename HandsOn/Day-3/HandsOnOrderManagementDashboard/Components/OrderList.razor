@@ -1,0 +1,17 @@
+﻿@using HandsOnOrderManagementDashboard.Models
+@foreach(var order in Orders)
+{
+    <div class="card m-2 p-2" @onclick="()=>Select(order)">
+       <strong>@order.CustomerName</strong>
+       <div>Status:@order.Status</div>
+    </div>
+}
+    
+@code {
+    [Parameter]public List<Order> Orders { get; set; }
+    [Parameter] public EventCallback<Order> OrderSelected{ get; set; }
+    async Task Select(Order order)
+    {
+        await OrderSelected.InvokeAsync(order);//notiry the Dashboard
+    }
+}
