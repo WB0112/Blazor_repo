@@ -1,0 +1,21 @@
+﻿@using OrderManagementDashBoard.Models
+@inject OrderManagementDashBoard.Services.OrderService orderService
+<button class="btn btn-success btn-sm" @onclick="Approve">Approve</button>
+<button class="btn btn-danger btn-sm" @onclick="Reject">Reject</button>
+
+@code {
+    [Parameter] public Order order{ get; set; }
+
+    void Approve()
+    {
+        orderService.UpdateStuaus(order, "Approved");
+        Console.WriteLine("State Updated");
+      
+    }
+    void Reject()
+    {
+        orderService.UpdateStuaus(order, "Rejected");
+        Console.WriteLine("State Updated");
+      
+    }
+}

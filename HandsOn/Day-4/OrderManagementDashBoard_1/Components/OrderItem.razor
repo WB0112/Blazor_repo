@@ -1,0 +1,17 @@
+﻿@using OrderManagementDashBoard.Models
+<tr>
+    <td>@Order.Id</td>
+    <td>@Order.CustomerName</td>
+    <td>@Order.Status</td>
+    <td>
+        <OrderActions order="Order" />
+    </td>
+    @if (!string.IsNullOrEmpty(Order.Remakrs))
+    {
+        <td>@Order.Remakrs</td>
+    }
+</tr>
+
+@code {
+    [Parameter] public Order Order { get; set; }
+}

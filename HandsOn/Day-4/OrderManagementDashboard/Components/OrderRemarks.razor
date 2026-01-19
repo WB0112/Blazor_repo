@@ -1,0 +1,43 @@
+﻿@using OrderManagementDashboard.Models
+@using OrderManagementDashboard.Services
+@* Covers preventDefault, EventCallback via service *@
+@inject OrderService OrderService
+
+<h6>Admin Remarks</h6>
+
+<form @onsubmit="SaveRemarks" @onsubmit:preventDefault>
+    <textarea class="form-control"
+              rows="3"
+              @bind="Remarks">
+    </textarea>
+
+    <button class="btn btn-primary btn-sm mt-2">
+        Save Remarks
+    </button>
+</form>
+
+@if (!string.IsNullOrWhiteSpace(Order.Remarks))
+{
+    <div class="alert alert-info mt-2">
+        <strong>Saved Remarks:</strong><br />
+        @Order.Remarks
+    </div>
+}
+
+
+@code {
+    [Parameter] public Order Order { get; set; } = default!;
+
+    string Remarks = string.Empty;
+
+    protected override void OnParametersSet()
+    {
+        Remarks = Order.Remarks;
+    }
+
+    void SaveRemarks()
+    {
+        OrderService.UpdateRemarks(Order, Remarks);
+    }
+}
+

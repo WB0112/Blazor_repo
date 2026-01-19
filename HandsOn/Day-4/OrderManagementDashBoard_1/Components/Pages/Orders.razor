@@ -1,0 +1,43 @@
+﻿@page "/orders"
+@using OrderManagementDashBoard.Models
+@inject OrderManagementDashBoard.Services.OrderService orderService
+<h3>Order Management Dashboard</h3>
+<div class="row mb-3">
+    <div class="col-6">
+        <AddOrder orders="orders" OnOrderAdded="HandleOrderAdded" />
+    </div>
+</div>
+<div class="row">
+    <div class="col-7">
+        <OrderList orders="orders" OnOrderSelected="SelectOrder" />
+    </div>
+</div>
+<hr />
+<p><strong>Audit:</strong>@auditMessage</p>
+@code {
+    List<Order> orders = new List<Order>()
+    {
+        new Order(){Id=10001,CustomerName="Ram"},
+        new Order(){Id=10002,CustomerName="Krinsha"}
+    };
+    string auditMessage = "No activity Yet";
+    Order selectedOrder;
+    void HandleOrderAdded(Order order)
+    {
+
+        auditMessage = $"New order {order.Id} added";
+
+        //StateHasChanged();
+    }
+    protected override void OnInitialized()
+    {
+        orderService.OrderUpdated += (Order order) =>
+        {
+            StateHasChanged();
+        };
+    }
+    void SelectOrder(Order order)
+    {
+        selectedOrder = order;
+    }
+}

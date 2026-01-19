@@ -1,0 +1,29 @@
+﻿@* Covers: Lambda delegation, EventCallback *@
+@using System.Collections.Generic
+@using OrderManagementDashboard.Models
+@using OrderManagementDashboard.Services
+@inject OrderService OrderService
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Order Id</th>
+            <th>Customer</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var order in orders)
+        {
+            <OrderItem Order="order"
+                       OnSelected="OnOrderSelected" />
+        }
+    </tbody>
+</table>
+
+@code {
+    [Parameter] public List<Order> orders { get; set; } = new();
+    [Parameter] public EventCallback<Order> OnOrderSelected { get; set; }
+}
+

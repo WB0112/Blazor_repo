@@ -1,0 +1,29 @@
+﻿@inject OrderManagementDashBoard.Services.OrderService orderService;
+@using OrderManagementDashBoard.Models
+<div class="container">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Order Id</th>
+                <th>Customer</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var order in orders)
+            {
+                <OrderItem Order="order" />
+            }
+        </tbody>
+    </table>
+</div>
+
+@code {
+    [Parameter] public List<Order> orders { get; set; } = new List<Order>();
+    [Parameter] public EventCallback<Order> OnOrderSelected{ get; set; }
+    protected override void OnInitialized()
+    {
+        StateHasChanged();
+    }
+}

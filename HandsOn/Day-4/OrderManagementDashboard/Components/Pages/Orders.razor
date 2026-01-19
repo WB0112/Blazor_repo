@@ -1,0 +1,74 @@
+﻿@* Orchestrates everything *@
+@page "/orders"
+@using OrderManagementDashboard.Models
+@using OrderManagementDashboard.Services
+@inject OrderService OrderService
+
+
+<h3>Order Management Dashboard</h3>
+
+<div class="row mb-3">
+    <div class="col-6">
+        <AddOrder Orders="orders"
+                  OnOrderAdded="HandleOrderAdded" />
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-7">
+        <OrderList Orders="orders"
+                   OnOrderSelected="SelectOrder" />
+    </div>
+
+    <div class="col-5">
+        @if (SelectedOrder is not null)
+        {
+            <h5>Selected Order: @SelectedOrder.Id</h5>
+            <OrderRemarks Order="SelectedOrder" />
+
+
+            <hr />
+
+            <OrderProcessing Order="SelectedOrder" />
+        }
+        else
+        {
+            <p><em>Select an order to manage</em></p>
+        }
+    </div>
+</div>
+
+<hr />
+<p><strong>Audit:</strong> @auditMessage</p>
+
+@code {
+    List<Order> orders = new()
+    {
+        new Order { Id = 1001, CustomerName = "Alice" },
+        new Order { Id = 1002, CustomerName = "Bob" }
+    };
+
+    Order? SelectedOrder;
+    string auditMessage = "No activity yet";
+
+    protected override void OnInitialized()
+    {
+        OrderService.OrderUpdated += order =>
+ {
+     auditMessage = $"Order {order.Id} updated. Status: {order.Status}, Remarks: {order.Remarks}";
+     StateHasChanged();
+ };
+    }
+
+    void SelectOrder(Order order)
+    {
+        SelectedOrder = order;
+    }
+
+    void HandleOrderAdded(Order order)
+    {
+        SelectedOrder = order;
+        auditMessage = $"New order {order.Id} added";
+    }
+}
+

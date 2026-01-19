@@ -1,0 +1,25 @@
+﻿@* Covers:
+✔ Event delegates
+✔ Lambda expressions
+✔ stopPropagation *@
+@using OrderManagementDashboard.Models
+<tr @onclick="() => OnSelected.InvokeAsync(Order)">
+    <td>@Order.Id</td>
+    <td>@Order.CustomerName</td>
+    <td>@Order.Status</td>
+    <td>
+        <OrderActions Order="Order" />
+    </td>
+    <td>
+        @if (!string.IsNullOrWhiteSpace(Order.Remarks))
+        {
+            <span title="@Order.Remarks">📝</span>
+        }
+    </td>
+
+</tr>
+
+@code {
+    [Parameter] public Order Order { get; set; } = default!;
+    [Parameter] public EventCallback<Order> OnSelected { get; set; }
+}

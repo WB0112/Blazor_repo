@@ -1,0 +1,36 @@
+﻿@* Covers:
+✔ Lambda delegation
+✔ EventCallback
+✔ stopPropagation *@
+@using OrderManagementDashboard.Models
+@using OrderManagementDashboard.Services
+@inject OrderService OrderService
+
+@inject OrderService OrderService
+
+<button class="btn btn-success btn-sm me-1"
+        @onclick="Approve"
+        @onclick:stopPropagation>
+    Approve
+</button>
+
+<button class="btn btn-danger btn-sm"
+        @onclick="Reject"
+        @onclick:stopPropagation>
+    Reject
+</button>
+
+@code {
+    [Parameter] public Order Order { get; set; } = default!;
+
+    void Approve()
+    {
+        OrderService.UpdateStatus(Order, "Approved");
+        Console.WriteLine("Order updared");
+    }
+
+    void Reject()
+    {
+        OrderService.UpdateStatus(Order, "Rejected");
+    }
+}

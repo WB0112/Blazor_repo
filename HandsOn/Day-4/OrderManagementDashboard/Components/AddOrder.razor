@@ -1,0 +1,44 @@
+﻿@using OrderManagementDashboard.Models
+@using OrderManagementDashboard.Services
+@inject OrderService OrderService
+
+<h5>Add New Order</h5>
+
+<form @onsubmit="CreateOrder" @onsubmit:preventDefault>
+    <div class="mb-2">
+        <label>Customer Name</label>
+        <input class="form-control" @bind="CustomerName" />
+    </div>
+
+    <button class="btn btn-primary btn-sm">
+        Add Order
+    </button>
+</form>
+
+@code {
+    [Parameter] public List<Order> Orders { get; set; } = new();
+    [Parameter] public EventCallback<Order> OnOrderAdded { get; set; }
+
+    string CustomerName = string.Empty;
+
+    void CreateOrder()
+    {
+        var newOrder = new Order
+        {
+            Id = GenerateOrderId(),
+            CustomerName = CustomerName,
+            Status = "Pending"
+        };
+
+        OrderService.AddOrder(Orders, newOrder);
+
+        OnOrderAdded.InvokeAsync(newOrder);
+
+        CustomerName = string.Empty;
+    }
+
+    int GenerateOrderId()
+    {
+        return Orders.Any() ? Orders.Max(o => o.Id) + 1 : 1001;
+    }
+}

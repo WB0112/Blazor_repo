@@ -1,0 +1,40 @@
+﻿@using OrderManagementDashboard.Models
+@using OrderManagementDashboard.Services
+@* Covers: Async / long-running events *@
+@inject OrderService OrderService
+
+<h6>Order Processing</h6>
+
+<button class="btn btn-warning btn-sm"
+        @onclick="ProcessOrder"
+        disabled="@isProcessing">
+    @(isProcessing ? "Processing..." : "Process Order")
+</button>
+
+<p class="mt-2">Status: @status</p>
+
+@code {
+    [Parameter] public Order Order { get; set; } = default!;
+
+    bool isProcessing;
+    string status = "Idle";
+
+    async Task ProcessOrder()
+    {
+        isProcessing = true;
+
+        status = "Checking inventory...";
+        await Task.Delay(1500);
+
+        status = "Verifying payment...";
+        await Task.Delay(1500);
+
+        status = "Shipping allocated...";
+        await Task.Delay(1500);
+
+        OrderService.UpdateStatus(Order, "Processed");
+
+        status = "Completed";
+        isProcessing = false;
+    }
+}
