@@ -1,0 +1,28 @@
+﻿@using ProductSelectedAndPlaceOrder.Models
+@inject ProductSelectedAndPlaceOrder.Services.ProductService productService
+<label>Select Product</label>
+<select class="form-select" @onchange="OnChange">
+    <option value="">--Select---</option>
+    @foreach(var product in products)
+    {
+        <option value="@product.Id">@product.Name</option>
+    }
+</select>
+
+@code {
+    private List<Product> products = new List<Product>();
+    [Parameter]
+    public EventCallback<int> SelectProductIdChanged{ get; set; }
+    [Parameter]
+    public int SelectedProductId{ get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        products = await productService.GetProductsAsync();
+    }
+    private async Task OnChange(ChangeEventArgs e)
+    {
+        SelectedProductId = int.Parse(e.Value!.ToString()!);
+        await SelectProductIdChanged.InvokeAsync(SelectedProductId);
+        Console.WriteLine(SelectedProductId);
+    }
+}

@@ -1,0 +1,11 @@
+﻿<h3>Demo2</h3>
+<button @onclick='()=>UpdateStatus("Approved")'>Approve</button>
+<button @onclick='()=>UpdateStatus("Rejected")'>Rejected</button>
+<p>Status:@status</p>
+@code {
+    string status = "Pending";
+    void UpdateStatus(string newStatus)
+    {
+        status = newStatus;
+    }
+}

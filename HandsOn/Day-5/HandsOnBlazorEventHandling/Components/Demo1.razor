@@ -1,0 +1,11 @@
+﻿<h3>Demo1</h3>
+<button class="btn btn-primary" @onclick="OnSave">Save</button>
+<p>@message</p>
+@code {
+    string message = "waiting...";
+    void OnSave()
+    {
+        message = "Saved Successfully";
+    }
+}
+@* Action,Func<Task>,EventOrgs *@

@@ -1,0 +1,40 @@
+﻿@using ProductSelectedAndPlaceOrder.Models
+@inject ProductSelectedAndPlaceOrder.Services.ProductService productService
+@* @page "/place-order" *@
+<h3>PlaceOrder</h3>
+<ProductSelector SelectProductIdChanged="OnProductChanged" SelectedProductId="order.ProductId" />
+<br />
+<QuantityEditor QuantityChanged="OnQunatityChanged" Quantity="order.Qunantity" />
+<OrderSummery order="order" />
+@code {
+    private Order order = new Order()
+    {
+        ProductId = 1,
+        Qunantity = 10,
+        TotalAmount = 400
+    };
+    private Product? selectedProduct;
+    private async Task OnProductChanged(int productId)
+    {
+        order.ProductId = productId;
+        selectedProduct = (await productService.GetProductsAsync()).First(p => p.Id == productId);
+        //await InvokeAsync(StateHasChanged);
+        await CalculateTotalAsync();
+    }
+    private async Task OnQunatityChanged(int value)
+    {
+        order.Qunantity = value;
+        await CalculateTotalAsync();
+        await InvokeAsync(StateHasChanged);
+        Console.WriteLine(order.Qunantity);
+    }
+    private async Task CalculateTotalAsync()
+    {
+        if (selectedProduct == null)
+            return;
+        await Task.Delay(200); //simulating pricing API
+        order.TotalAmount = order.Qunantity * selectedProduct.Price;
+        await InvokeAsync(StateHasChanged);
+        Console.WriteLine(order.TotalAmount);
+    }
+}

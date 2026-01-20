@@ -1,0 +1,14 @@
+﻿<h3>SignUp</h3>
+<form @onsubmit="Save" @onsubmit:preventDefault>
+    <input @bind="name" />
+   <button type="submit">Save</button>
+    <a href="/home" @onclick="Save" @onclick:preventDefault>click</a>
+</form>
+
+@code {
+    string name;
+    void Save()
+    {
+        Console.WriteLine($"Saved {name}");
+    }
+}

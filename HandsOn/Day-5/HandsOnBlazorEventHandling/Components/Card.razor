@@ -1,0 +1,13 @@
+﻿<div class="card" @onclick="ParentClicked" style="border:1px solid red;padding:40px">
+    <button class="btn btn-success" @onclick="ChildClicked" @onclick:stopPropagation>
+        Clicked
+    </button>
+</div>
+
+@code {
+    void ParentClicked()
+    {
+        Console.WriteLine("Card Clicked");
+    }
+    void ChildClicked() => Console.WriteLine("Button Clicked");
+}

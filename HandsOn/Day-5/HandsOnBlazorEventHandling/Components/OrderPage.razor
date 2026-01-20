@@ -1,0 +1,11 @@
+﻿<h3>OrderPage</h3>
+<OrderActions 
+    OnStatusChanged="HandleStaus" />
+<p>Order Status:@status</p>
+@code {
+    string status = "Pending";
+    void HandleStaus(string value)
+    {
+        status = value;
+    }
+}

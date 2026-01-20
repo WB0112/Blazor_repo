@@ -1,0 +1,14 @@
+﻿<h3>OrderActions</h3>
+<button class="btn btn-success" @onclick="Approve">Approve</button>
+<button class="btn btn-success" @onclick="Reject">Reject</button>
+@code {
+    [Parameter] public EventCallback<string> OnStatusChanged{ get; set; }
+    async Task Approve()
+    {
+        await OnStatusChanged.InvokeAsync("Approved");
+    }
+    async Task Reject()
+    {
+        await OnStatusChanged.InvokeAsync("Rejected");
+    }
+}

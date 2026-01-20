@@ -1,0 +1,12 @@
+﻿<h3>LoadData</h3>
+<button @onclick="Load">Load Data</button>
+<p>@message</p>
+@code {
+    string message = "Idle";
+    async Task Load()
+    {
+        message="Loading....";
+        await Task.Delay(3000); //API Call
+        message = "Completed";
+    }
+}

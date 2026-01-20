@@ -1,0 +1,14 @@
+﻿@using ProductSelectedAndPlaceOrder.Models
+<div class="card mt-3">
+    <div class="card-body">
+        <h5>Orer Summery</h5>
+        <p>Product Id:@order.ProductId</p>
+        <p>Quantity:@order.Qunantity</p>
+        <p><strong>Total:@order.TotalAmount</strong></p>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public Order order { get; set; } = new Order();
+}

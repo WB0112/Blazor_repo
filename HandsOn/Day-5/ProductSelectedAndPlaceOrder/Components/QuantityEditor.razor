@@ -1,0 +1,15 @@
+﻿<lable>Quantity</lable>
+<input type="number" class="form-control" value="@Quantity" @onchange="OnChange" />
+@code {
+    [Parameter]
+    public int Quantity{ get; set; }
+    [Parameter]
+    public EventCallback<int> QuantityChanged{ get; set; }
+
+    private async Task OnChange(ChangeEventArgs e)
+    {
+        Quantity = int.Parse(e.Value!.ToString()!);
+        await QuantityChanged.InvokeAsync(Quantity);
+    }
+  
+}
