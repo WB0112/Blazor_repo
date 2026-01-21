@@ -1,0 +1,16 @@
+﻿<InputFile OnChange="HandleFileUpload" />
+
+<p>@fileName</p>
+
+@code {
+    private string fileName;
+
+    private async Task HandleFileUpload(InputFileChangeEventArgs e)
+    {
+        var file = e.File;
+        fileName = file.Name;
+        //Read the uploaded file
+        //using var stream = file.OpenReadStream(maxAllowedSize: 5_000_000);
+        // Save stream to disk or send to API
+    }
+}

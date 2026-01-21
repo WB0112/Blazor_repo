@@ -1,0 +1,12 @@
+﻿<h3>Demo</h3>
+<label>Select Role</label>
+<InputSelect @bind-Value="role">
+    <option value="">Select Role</option>
+    <option>Admin</option>
+    <option value="HR">HR</option>
+    <option value="Developer">Developer</option>
+</InputSelect>
+<p>Selected Role:@role</p>
+@code {
+    private string role = string.Empty;
+}

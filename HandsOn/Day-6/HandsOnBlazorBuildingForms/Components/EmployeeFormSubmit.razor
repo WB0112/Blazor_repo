@@ -1,0 +1,40 @@
+﻿<EditForm Model="@employee" OnValidSubmit="HandleSubmit">
+    <label>Name</label>
+    <InputText @bind-Value="employee.Name" />
+
+    <label>Email</label>
+    <InputText @bind-Value="employee.Email" />
+
+    <label>Age</label>
+    <InputNumber @bind-Value="employee.Age" />
+
+    <button type="submit">Save</button>
+</EditForm>
+
+<p>
+    @message
+</p>
+
+
+@code {
+    private Employee employee = new();
+    private string message = string.Empty;
+    private async Task HandleSubmit()
+    {
+        await Task.Delay(500); // simulate API call
+        message = "Employee Saved";
+        Console.WriteLine("Employee Saved");
+    }
+
+}
+@* What Happens Internally
+
+Form submission intercepted by Blazor
+
+Event handled via SignalR/WebAssembly
+
+No page reload
+
+Component re-renders only what changed
+
+This is SPA behavior without JavaScript frameworks. *@

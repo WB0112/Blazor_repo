@@ -1,0 +1,26 @@
+﻿<EditForm Model="@employee" >
+    <label>Name</label>
+    <InputText @bind-Value="employee.Name" />
+
+    <label>Email</label>
+    <InputText @bind-Value="employee.Email" />
+
+    <label>Age</label>
+    <InputNumber @bind-Value="employee.Age" />
+    <lable>Search</lable>
+    <input type="text" @bind="employee.Name" @bind:event="oninput" />
+    <button type="submit">Save</button>
+</EditForm>
+
+<p>
+    Preview: @employee.Name | @employee.Email | @employee.Age
+</p>
+
+<p>
+    @search
+</p>
+@code {
+    private string search = string.Empty;
+    private Employee employee = new();
+
+}

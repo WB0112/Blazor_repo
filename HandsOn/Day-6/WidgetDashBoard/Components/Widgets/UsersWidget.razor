@@ -8,7 +8,8 @@
     [Parameter] public EventCallback<string> OnWidgetAction { get; set; }
     public void Refresh()
     {
-
+        _users += 50;
+        StateHasChanged();
     }
     async Task NotifyDashboard()
     {

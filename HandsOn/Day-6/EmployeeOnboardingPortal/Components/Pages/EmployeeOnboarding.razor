@@ -1,0 +1,75 @@
+﻿@page "/onboarding"
+@using EmployeeOnboardingPortal.Models
+@using EmployeeOnboardingPortal.Services
+@* @using Microsoft.AspNetCore.Antiforgery *@
+@inject EmployeeService EmployeeService
+@inject NavigationManager Navigation
+@* @inject IAntiforgery Antiforgery
+@inject IHttpContextAccessor HttpContext *@
+@rendermode InteractiveServer
+<EditForm Model="@employee" OnValidSubmit="SubmitAsync">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    @* <input type="hidden"
+           name="__RequestVerificationToken"
+           value="@Antiforgery.GetAndStoreTokens(HttpContext.HttpContext).RequestToken" /> *@
+
+    <h3>Employee Onboarding</h3>
+
+    <InputText class="form-control mb-2"
+               placeholder="Full Name"
+               @bind-Value="employee.FullName" />
+
+    <InputText class="form-control mb-2"
+               placeholder="Email"
+               @bind-Value="employee.Email" />
+
+    <InputNumber class="form-control mb-2"
+                 placeholder="Experience"
+                 @bind-Value="employee.ExperienceYears" />
+
+    <fieldset class="border p-3 mb-2">
+        <legend>Address</legend>
+
+        <InputText class="form-control mb-2"
+                   placeholder="City"
+                   @bind-Value="employee.Address.City" />
+
+        <InputText class="form-control mb-2"
+                   placeholder="Country"
+                   @bind-Value="employee.Address.Country" />
+    </fieldset>
+
+    <InputFile OnChange="UploadFile" />
+
+    <div class="form-check mt-2">
+        <InputCheckbox class="form-check-input"
+                       @bind-Value="employee.AcceptPolicy" />
+        <label class="form-check-label">Accept Policy</label>
+    </div>
+
+    <button class="btn btn-primary mt-3">Submit</button>
+</EditForm>
+@code {
+    private Employee employee = new();
+    private IBrowserFile resume;
+
+    private async Task UploadFile(InputFileChangeEventArgs e)
+    {
+        resume = e.File;
+
+        var path = Path.Combine("wwwroot/uploads", resume.Name);
+        using var stream = new FileStream(path, FileMode.Create);
+
+        await resume.OpenReadStream(5_000_000).CopyToAsync(stream);
+
+        employee.ResumeFileName = resume.Name;
+    }
+
+    private async Task SubmitAsync()
+    {
+        await EmployeeService.SaveAsync(employee);
+        Navigation.NavigateTo("/success");
+    }
+}

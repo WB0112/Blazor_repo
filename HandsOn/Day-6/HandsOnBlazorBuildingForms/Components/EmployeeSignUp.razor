@@ -1,0 +1,28 @@
+﻿<EditForm Model="@employee">
+    <label>Name</label>
+    <InputText @bind-Value="employee.Name" />
+
+    <label>Email</label>
+    <InputText @bind-Value="employee.Email" />
+
+    <label>Age</label>
+    <InputNumber @bind-Value="employee.Age" />
+
+    <fieldset>
+        <legend>Address</legend>
+
+        <InputText @bind-Value="employee.Address.City" />
+        <InputText @bind-Value="employee.Address.Country" />
+    </fieldset>
+    <button type="submit">Save</button>
+</EditForm>
+@code
+{
+    Employee employee = new Employee();
+    Address address = new Address();
+    protected override void OnInitialized()
+    {
+        employee.Address = address;
+    }
+
+}
