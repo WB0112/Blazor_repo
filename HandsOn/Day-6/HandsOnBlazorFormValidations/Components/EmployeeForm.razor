@@ -1,0 +1,17 @@
+﻿@using HandsOnBlazorFormValidations.Models
+<EditForm Model="@employee" OnValidSubmit="Save">
+    <DataAnnotationsValidator />
+
+    <InputText @bind-Value="employee.Name" />
+    <ValidationMessage For="@(() => employee.Name)" />
+
+    <InputText @bind-Value="employee.Email" />
+    <ValidationMessage For="@(() => employee.Email)" />
+
+    <button type="submit">Save</button>
+</EditForm>
+
+@code {
+    EmployeeModel employee = new();
+    void Save() { }
+}

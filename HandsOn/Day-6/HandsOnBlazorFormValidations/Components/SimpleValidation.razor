@@ -1,0 +1,21 @@
+﻿@using HandsOnBlazorFormValidations.Models
+<EditForm Model="@user" OnValidSubmit="Save">
+    <DataAnnotationsValidator />
+
+    <div>
+        <label>Name</label>
+        <InputText @bind-Value="user.Name" />
+        <ValidationMessage For="@(() => user.Name)" />
+    </div>
+
+    <button type="submit">Save</button>
+</EditForm>
+
+@code {
+    SimpleUser user = new();
+
+    void Save()
+    {
+        Console.WriteLine("Form is valid");
+    }
+}

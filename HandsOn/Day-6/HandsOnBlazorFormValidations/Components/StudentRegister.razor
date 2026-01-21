@@ -1,0 +1,54 @@
+﻿@using HandsOnBlazorFormValidations.Models
+<EditForm EditContext="@editContext"
+          OnValidSubmit="HandleValid"
+          OnInvalidSubmit="HandleInvalid">
+    <DataAnnotationsValidator />
+    <div>
+        <label>Name</label>
+        <InputText @bind-Value="model.Name" />
+        <ValidationMessage For="@(() => model.Name)" />
+    </div>
+    <div>
+        <label>Email</label>
+        <InputText @bind-Value="model.Email" />
+        <ValidationMessage For="@(() => model.Email)" />
+    </div>
+
+    <div>
+        <label>Age</label>
+        <InputNumber @bind-Value="model.Age" />
+        <ValidationMessage For="@(() => model.Age)" />
+    </div>
+    <button type="submit">Register</button>
+</EditForm>
+<p>@showToast</p>
+@if (showToast)
+{
+    <div style="background:red;color:white;padding:10px;">
+        VALIDATION FAILED
+    </div>
+}
+
+
+@code {
+    RegistrationModel model = new();
+    EditContext editContext;
+    bool showToast;
+
+    protected override void OnInitialized()
+    {
+        editContext = new EditContext(model);
+    }
+
+    void HandleValid()
+    {
+        showToast = false;
+        Console.WriteLine("Saved");
+    }
+
+    void HandleInvalid()
+    {
+        showToast = true;
+        StateHasChanged();
+    }
+}

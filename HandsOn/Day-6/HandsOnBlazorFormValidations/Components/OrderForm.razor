@@ -1,0 +1,23 @@
+﻿@using HandsOnBlazorFormValidations.Models
+<EditForm Model="@order" OnValidSubmit="Submit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <h4>Customer</h4>
+    <InputText @bind-Value="order.Name" />
+    <ValidationMessage For="@(() => order.Name)" />
+
+    <h4>Address</h4>
+    <InputText @bind-Value="order.City" />
+    <ValidationMessage For="@(() => order.City)" />
+
+    <button type="submit">Place Order</button>
+</EditForm>
+
+@code {
+    OrderModel order = new();
+    void Submit()
+    {
+        Console.WriteLine("Order Placed!!");
+    }
+}

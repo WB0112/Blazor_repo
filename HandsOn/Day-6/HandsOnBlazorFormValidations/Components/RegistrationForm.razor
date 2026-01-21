@@ -1,0 +1,34 @@
+﻿@using HandsOnBlazorFormValidations.Models
+<EditForm Model="@model" OnValidSubmit="Register">
+    <DataAnnotationsValidator />
+
+    <div>
+        <label>Name</label>
+        <InputText @bind-Value="model.Name" />
+        <ValidationMessage For="@(() => model.Name)" />
+    </div>
+
+    <div>
+        <label>Email</label>
+        <InputText @bind-Value="model.Email" />
+        <ValidationMessage For="@(() => model.Email)" />
+    </div>
+
+    <div>
+        <label>Age</label>
+        <InputNumber @bind-Value="model.Age" />
+        <ValidationMessage For="@(() => model.Age)" />
+    </div>
+
+    <button type="submit">Register</button>
+</EditForm>
+
+@code {
+    RegistrationModel model = new();
+
+    void Register()
+    {
+        Console.WriteLine("User Registered");
+    }
+}
+

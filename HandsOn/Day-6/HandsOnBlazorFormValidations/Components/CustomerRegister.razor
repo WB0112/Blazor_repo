@@ -1,0 +1,35 @@
+﻿@using HandsOnBlazorFormValidations.Models
+<EditForm EditContext="@editContext">
+    <DataAnnotationsValidator />
+
+    <InputText @bind-Value="model.Name" />
+    <ValidationMessage For="@(() => model.Name)" />
+
+    <InputText @bind-Value="model.Email" />
+    <ValidationMessage For="@(() => model.Email)" />
+
+    <InputNumber @bind-Value="model.Age" />
+    <ValidationMessage For="@(() => model.Age)" />
+
+    <button disabled="@(!isValid)">Submit</button>
+
+</EditForm>
+
+@code {
+    RegistrationModel model = new();
+    EditContext editContext;
+    bool isValid=false;
+    //executes for every textbox value
+    protected override void OnInitialized()
+    {
+        //track changes and validation
+        editContext = new EditContext(model);
+        //Subscribes to the OnFieldChanged even
+        //Registers a callback that runs every time any field changes
+        editContext.OnFieldChanged += (_, __) =>
+        {
+            isValid = editContext.Validate();
+            StateHasChanged();
+        };
+    }
+}
