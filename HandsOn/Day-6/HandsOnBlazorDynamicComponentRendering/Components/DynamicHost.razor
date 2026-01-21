@@ -1,0 +1,15 @@
+﻿<h3>DynamicHost</h3>
+<button @onclick="()=>LoadComponent(typeof(ComponentA))">Load A</button>
+<button @onclick="()=>LoadComponent(typeof(ComponentB))">Load B</button>
+@* Place Holder *@
+@if (currenComponent != null)
+{
+    <DynamicComponent Type="@currenComponent" />
+}
+@code {
+    Type? currenComponent;
+    void LoadComponent(Type componentType)
+    {
+        currenComponent = componentType;
+    }
+}

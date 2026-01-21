@@ -1,0 +1,29 @@
+﻿<h3>OnConfirmDialogHost</h3>
+<button @onclick="Showdialog">ShowDialog</button>
+@if(componentType!=null)
+{
+    <DynamicComponent Type="componentType" Parameters="parameters" />
+}
+@code {
+    Type? componentType;
+    Dictionary<string, object>? parameters;
+    void Showdialog()
+    {
+        componentType = typeof(ConfirmationDialog);
+        parameters = new()
+            {
+            //["OnConfirmed"] = EventCallback.Factory.Create(this, HandleConfirm) //when the handler not having parameter
+                ["OnConfirmed"] = EventCallback.Factory.Create<string>(this, HandleConfirm)
+            };
+    }
+    void HandleConfirm(string param)
+    {
+        Console.WriteLine("Confirmed from dynamic component");
+        Console.WriteLine(param);
+    }
+    // void HandleConfirm()
+    // {
+    //     Console.WriteLine("Confirmed from dynamic component");
+        
+    // }
+}

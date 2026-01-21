@@ -1,0 +1,12 @@
+﻿@implements IRefreshable
+<h3>DashboardWidget</h3>
+<p>Last refreshed at:@_lastRefresh</p>
+<button @onclick="Refresh">Refresh(inside)</button>
+@code {
+    private DateTime _lastRefresh = DateTime.Now;
+    public void Refresh()
+    {
+        _lastRefresh = DateTime.Now;
+        StateHasChanged(); //Notify the UI to update
+    }
+}

@@ -1,0 +1,39 @@
+﻿@using WidgetDashBoard.Components.Widgets
+<h3>Dynamic Admin Dashboard</h3>
+<div style="margin-bottom:10px">
+    <button @onclick="()=>LoadWidget(typeof(SalesWidget))">Load Sales</button>
+    <button @onclick="()=>LoadWidget(typeof(UsersWidget))">Load Users</button>
+    <button @onclick="RefreshWidget">RefreshWidget</button>
+    <p><strong>Dashboard Message:</strong>@_message</p>
+    @if(currentWidgetType!=null)
+    {
+        <DynamicComponent Type="currentWidgetType" Parameters="parameters" @ref="dynamicRef"></DynamicComponent>
+    }
+</div>
+@code {
+    private string _message = "No events yet";
+    Type? currentWidgetType;
+    Dictionary<string, object>? parameters;
+    DynamicComponent? dynamicRef;
+    void LoadWidget(Type WidgetType)
+    {
+        _message = "No events yet";
+        currentWidgetType = WidgetType;
+        parameters = new Dictionary<string, object>()
+        {
+            ["OnWidgetAction"]=EventCallback.Factory.Create<string>(this,HandleWidgetEvent)
+        };
+    }
+    void HandleWidgetEvent(string message)
+    {
+        _message = message;
+        //StateHasChanged();
+    }
+    void RefreshWidget()
+    {
+        if(dynamicRef?.Instance is WidgetDashBoard.Contracts.IWidget widget)
+        {
+            widget.Refresh();
+        }
+    }
+}

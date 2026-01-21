@@ -1,0 +1,18 @@
+﻿<h3>UserProfileHost</h3>
+<DynamicComponent Type="componentType" Parameters="parameters" />
+@code {
+    Type? componentType;
+    Dictionary<string, object>? parameters;
+    protected override void OnInitialized()
+    {
+        componentType = typeof(UserProfile);
+        //set parameters
+        parameters = new Dictionary<string, object>()
+            {
+                ["Name"] = "John",
+                ["Email"] = "john@gmail.com",
+                ["Age"] = "Pune",
+                ["City"]="Chennai"
+            };
+    }
+}

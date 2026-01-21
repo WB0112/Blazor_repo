@@ -1,0 +1,18 @@
+﻿@implements WidgetDashBoard.Contracts.IWidget
+<h4>@Title</h4>
+<p>Total Sales:@_sales</p>
+<button @onclick="NotifyDashboard">Notity DashBoard</button>
+@code {
+    private int _sales = 1000;
+    public string Title { get; set; } = "Sales Widget";
+    [Parameter] public EventCallback<string> OnWidgetAction{ get; set; }
+    public void Refresh()
+    {
+        _sales += 500;
+        StateHasChanged();
+    }
+    async Task NotifyDashboard()
+    {
+        await OnWidgetAction.InvokeAsync($"Sales reached {_sales}");
+    }
+}

@@ -1,0 +1,17 @@
+﻿@implements WidgetDashBoard.Contracts.IWidget
+<h4>@Title</h4>
+<p>Active Users:@_users</p>
+<button @onclick="NotifyDashboard">Notity DashBoard</button>
+@code {
+    private int _users = 50;
+    public string Title { get; set; } = "Users Widget";
+    [Parameter] public EventCallback<string> OnWidgetAction { get; set; }
+    public void Refresh()
+    {
+
+    }
+    async Task NotifyDashboard()
+    {
+        await OnWidgetAction.InvokeAsync($"Users reached {_users}");
+    }
+}

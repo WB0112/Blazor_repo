@@ -1,0 +1,12 @@
+﻿<h3>ConfirmationDialog</h3>
+<button @onclick="Confirm">Confirm</button>
+
+@code {
+    [Parameter] public EventCallback<string> 
+    OnConfirmed{ get; set; }
+    async Task Confirm()
+    {
+        await OnConfirmed.InvokeAsync
+        ("Hello Dialog");
+    }
+}
