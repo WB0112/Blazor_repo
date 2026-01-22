@@ -1,4 +1,5 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿@inject HandsOnBlazorNavigationAndRouting.Services.AppState AppState
+<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="">HandsOnBlazorNavigationAndRouting</a>
     </div>
@@ -25,6 +26,22 @@
                 <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Contact
             </NavLink>
         </div>
+        @if (AppState.IsAdmin)
+        {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="get-users">
+                    <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> ViewUsers
+                </NavLink>
+            </div>
+        }
+        @if (AppState.IsAdmin||AppState.IsUser)
+        {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="login">
+                    <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> LogOut
+                </NavLink>
+            </div>
+        }
     </nav>
 </div>
 

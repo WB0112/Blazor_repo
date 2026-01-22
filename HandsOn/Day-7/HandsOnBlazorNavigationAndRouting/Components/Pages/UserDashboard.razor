@@ -1,8 +1,14 @@
 ﻿@page "/user-dashboard/{UserName}"
+@inject NavigationManager Navigation
+@rendermode InteractiveServer
 <h3>Welcome UserDashboard</h3>
 <p>Hello,@UserName</p>
-
+@* <button class="btn btn-primary" @onclick="LogOut">Log Out</button> *@
 @code {
     [Parameter]
     public string UserName { get; set; }
+    private async Task LogOut()
+    {
+        Navigation.NavigateTo("/login"); // Redirect to Login page
+    }
 }

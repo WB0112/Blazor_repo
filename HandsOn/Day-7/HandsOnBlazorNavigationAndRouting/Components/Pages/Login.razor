@@ -3,6 +3,7 @@
 @inject NavigationManager Navigation
 @inject HandsOnBlazorNavigationAndRouting.Services.UserService UserService
 @rendermode InteractiveServer
+@inject HandsOnBlazorNavigationAndRouting.Services.AppState AppState
 <h3>Login</h3>
 <div class="container">
     <div class="row justify-content-center">
@@ -47,11 +48,15 @@
             var userName = user.Name;
             if (user.Role == "User")
             {
-                Navigation.NavigateTo("/user-dashboard/"+userName);
+                //set IsUser in AppState to true
+                AppState.IsUser = true;
+                Navigation.NavigateTo("/user-dashboard/"+userName,true);
             }
             else if (user.Role == "Admin")
             {
-                Navigation.NavigateTo("/admin-dashboard/"+userName);
+                //set IsAdmin in AppState to true
+                AppState.IsAdmin = true;
+                Navigation.NavigateTo("/admin-dashboard/"+userName,true);
             }
         }
         else
