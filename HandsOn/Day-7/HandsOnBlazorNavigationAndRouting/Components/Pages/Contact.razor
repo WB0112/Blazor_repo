@@ -1,0 +1,60 @@
+﻿@page "/contact"
+@rendermode InteractiveServer
+<div class="container py-5">
+    <h2 class="mb-4">Contact Us</h2>
+
+    <div class="row">
+        <div class="col-md-6">
+            <EditForm Model="@model" OnValidSubmit="HandleSubmit">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+
+                <div class="mb-3">
+                    <label class="form-label">Name</label>
+                    <InputText class="form-control" @bind-Value="model.Name" />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <InputText class="form-control" @bind-Value="model.Email" />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Message</label>
+                    <InputTextArea class="form-control" rows="4"
+                                   @bind-Value="model.Message" />
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    Send Message
+                </button>
+            </EditForm>
+        </div>
+
+        <div class="col-md-6">
+            <div class="bg-white p-4 rounded shadow-sm">
+                <h5>Office Address</h5>
+                <p class="text-muted mb-1">Bangalore, India</p>
+                <p class="text-muted mb-1">Email: support@myblazorapp.com</p>
+                <p class="text-muted">Phone: +91 90000 00000</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private ContactModel model = new();
+
+    private void HandleSubmit()
+    {
+        // Simulate form submission
+        Console.WriteLine("Contact form submitted");
+    }
+
+    public class ContactModel
+    {
+        public string? Name { get; set; }
+        public string? Email { get; set; }
+        public string? Message { get; set; }
+    }
+}

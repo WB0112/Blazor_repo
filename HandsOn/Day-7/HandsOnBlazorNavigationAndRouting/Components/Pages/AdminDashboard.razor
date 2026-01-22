@@ -1,0 +1,8 @@
+﻿@page "/admin-dashboard/{UserName}"
+<h3>Welcome to AdminDashboard</h3>
+<p>Hello,@UserName</p>
+
+@code {
+    [Parameter]
+    public string UserName { get; set; }
+}

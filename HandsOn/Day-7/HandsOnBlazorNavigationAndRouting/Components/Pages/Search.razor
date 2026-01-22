@@ -1,0 +1,15 @@
+﻿@* int guid datetime as the route constraints *@
+@page "/search/{price:int}"
+<h3>Search</h3>
+<p>Product: @Product</p>
+<p>Category: @Category</p>
+<p>Price: @Price</p>
+
+@code {
+    [Parameter, SupplyParameterFromQuery] // Bind from query string
+    public string? Product{ get; set; }
+    [Parameter,SupplyParameterFromQuery]
+    public string? Category { get; set; }
+    [Parameter] // Bind from route
+    public int?Price{ get; set; }
+}
