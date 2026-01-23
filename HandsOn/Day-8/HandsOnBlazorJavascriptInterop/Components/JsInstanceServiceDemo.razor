@@ -1,0 +1,41 @@
+﻿@page "/js-instance-service"
+@using HandsOnBlazorJavascriptInterop.Interop
+@inject IJSRuntime JS;
+@inject HandsOnBlazorJavascriptInterop.Interop.JsInstanceCallbackService CallbackService
+@implements IDisposable
+@rendermode InteractiveServer
+<h3>JS - Donet(Instance Service Callback)</h3>
+<button class="btn btn-primary" @onclick="RegisterInstance">Register Instance for Callback</button>
+<button class="btn btn-info" @onclick="InvokeInstanceMethod">Invoke Instance Method</button>
+<p>Message from JS: @message</p>
+<p>Result from JS Instance Method: @result</p>
+
+@code {
+    private string message = string.Empty;
+    private int result;
+    private DotNetObjectReference<JsInstanceCallbackService>? objRef;// Reference to this instance
+    protected override void OnInitialized()
+    {
+        CallbackService.OnMessageReceived += HandleCallback; // Subscribe to event
+    }
+    private async Task RegisterInstance()
+    {
+        objRef = DotNetObjectReference.Create(CallbackService);// Create a reference to this instance
+        await JS.InvokeVoidAsync("callNofityInstance", objRef);
+    }
+    private async Task InvokeInstanceMethod()
+    {
+        objRef = DotNetObjectReference.Create(CallbackService);
+        result = await JS.InvokeAsync<int>("callAddInstance", objRef);
+    }
+    private void HandleCallback(string msg)
+    {
+        message = msg;
+        InvokeAsync(StateHasChanged);// Update UI
+    }   
+    public void Dispose()
+    {
+        CallbackService.OnMessageReceived -= HandleCallback;// Unsubscribe from event
+        objRef?.Dispose();
+    }
+}

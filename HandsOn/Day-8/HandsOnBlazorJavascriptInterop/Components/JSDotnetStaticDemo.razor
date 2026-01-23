@@ -1,0 +1,24 @@
+﻿@page "/js-to-dotnet"
+@inject IJSRuntime JS
+@rendermode InteractiveServer
+<h3>Javascript-.Net(Static Method Call)</h3>
+<button class="btn btn-primary" @onclick="Notify">Tigger Notify</button>
+<button class="btn btn-info" @onclick="AddJs">Tigger AddJs</button>
+<button class="btn btn-success" @onclick="SquareJs">Tigger SquareJs</button>
+<p>Result:@result</p>
+
+@code {
+    private int result = 0;
+    private async Task Notify()
+    {
+        await JS.InvokeVoidAsync("CallNotityFromJsOnly");
+    }
+    public async Task AddJs()
+    {
+        result = await JS.InvokeAsync<int>("CallAddNumbersFromJsOnly");
+    }
+    public async Task SquareJs()
+    {
+        result = await JS.InvokeAsync<int>("CallSqaureFromJsOnly", 12);
+    }
+}

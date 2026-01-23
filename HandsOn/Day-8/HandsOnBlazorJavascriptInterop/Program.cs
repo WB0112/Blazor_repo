@@ -1,8 +1,10 @@
 using HandsOnBlazorJavascriptInterop.Components;
+using HandsOnBlazorJavascriptInterop.Interop;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddSingleton<JsInstanceCallbackService>();
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
