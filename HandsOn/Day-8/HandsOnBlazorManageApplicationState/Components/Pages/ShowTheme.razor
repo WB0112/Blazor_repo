@@ -1,0 +1,25 @@
+﻿@page "/showtheme"
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+@inject ProtectedSessionStorage SessionStorage
+@rendermode InteractiveServer
+<h3>ShowTheme</h3>
+<p>Current Theme: @_theme</p>
+@code {
+    private string _theme=string.Empty;
+   
+    protected override async Task OnAfterRenderAsync(bool firstRender=true) // Lifecycle method to run after component rendering
+    {
+        
+        if (firstRender)
+        {
+            var result = await SessionStorage.GetAsync<string>("theme"); // Retrieve theme from ProtectedSessionStorage
+            if (result.Success && !
+                string.IsNullOrEmpty(result.Value))
+            {
+                _theme = result.Value??"Not Set";
+                await InvokeAsync(StateHasChanged); // Update UI
+            }
+        }
+       
+    }
+}

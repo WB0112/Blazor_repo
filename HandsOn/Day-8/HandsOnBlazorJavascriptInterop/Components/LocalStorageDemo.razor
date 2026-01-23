@@ -1,0 +1,54 @@
+﻿@page "/local-storage"
+@inject IJSRuntime JS
+@rendermode InteractiveServer
+<h3>JavaScript Isoloation LocalStorage Demo</h3>
+<div class="mb-3">
+    <label for="usernameInput" class="form-label">Username</label>
+    <input type="text" id="usernameInput" class="form-control" @bind="username" />
+</div>
+<button class="btn btn-primary me-2" @onclick="SaveUsername">Save Username</button>
+<button class="btn btn-secondary me-2" @onclick="LoadUsername">Load Username</button>
+<button class="btn btn-danger" @onclick="Clear">Clear Local Storage</button>
+@if (!string.IsNullOrEmpty(savedUsername))
+{
+    <div class="mt-3">
+        <strong>Saved Username:</strong> @savedUsername
+    </div>
+}
+
+@code {
+    private string username = "";
+    private string savedUsername = "";
+    private IJSObjectReference? module; //reference to the JS module
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            module = await JS.InvokeAsync<IJSObjectReference>("import", "./Components/LocalStorageDemo.razor.js");
+
+        }
+    }
+    private async Task SaveUsername()
+    {
+        if (module != null)
+        {
+            await module.InvokeVoidAsync("setItem", "username", username);
+            savedUsername = username;
+        }
+    }
+    private async Task LoadUsername()
+    {
+        if (module != null)
+        {
+            savedUsername = await module.InvokeAsync<string>("getItem", "username") ?? "No username found";
+        }
+    }
+    private async Task Clear()
+    {
+        if (module != null)
+        {
+            await module.InvokeVoidAsync("clearStorage");
+
+        }
+    }
+}

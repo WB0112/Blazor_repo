@@ -1,0 +1,23 @@
+﻿@page "/dashboard"
+@inject HandsOnBlazorManageApplicationState.Services.AppState AppState
+@implements IDisposable
+<h3>Dashboard</h3>
+<p>Welcome, @username!</p>
+<p>Your role is: @role</p>
+
+@code {
+    public string? username = "";
+    public string? role = "";
+    protected override  void OnInitialized()
+    {
+        // For demonstration purposes, we'll set static values.
+        // In a real application, you would retrieve this from an authentication service.
+        username = AppState.UserName;
+        role = AppState.Role;
+        AppState.OnChange += StateHasChanged;// Subscribe to state changes
+    }
+    public void Dispose()
+    {
+        AppState.OnChange -= StateHasChanged; // Unsubscribe to prevent memory leaks
+    }
+}

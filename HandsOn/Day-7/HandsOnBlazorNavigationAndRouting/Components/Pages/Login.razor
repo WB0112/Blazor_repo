@@ -46,6 +46,7 @@
         if (user != null)
         {
             var userName = user.Name;
+            AppState.IsLoggedIn = true;
             if (user.Role == "User")
             {
                 //set IsUser in AppState to true

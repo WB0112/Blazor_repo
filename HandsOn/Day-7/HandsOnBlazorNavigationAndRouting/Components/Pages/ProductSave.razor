@@ -1,0 +1,22 @@
+﻿@page "/product-save"
+@inject NavigationManager Nav
+@rendermode InteractiveServer
+<button @onclick="SaveAndNavigate" disabled="@isSaving">Save</button>
+<p>@status</p>
+@code {
+    private string status = "";
+    private bool isSaving = false;
+    async Task SaveAndNavigate()
+    {
+        isSaving = true;
+        status = "Saving...";
+        await Task.Delay(4000); // Simulate save
+        Nav.NavigateTo("/dashboard");// Navigate after save
+    }
+}
+
+@* Executing an Asynchronous Operation with Navigation *@
+
+@* Navigation should be explicitly controlled
+
+Avoid navigating before async completion *@

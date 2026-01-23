@@ -1,0 +1,65 @@
+﻿@using HandsOnBlazorManageApplicationState.Services
+@inject AppState AppState
+@inject NavigationManager navManager
+@implements IDisposable
+@rendermode InteractiveServer
+<div class="top-row ps-3 navbar navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="">HandsOnBlazorManageApplicationState</a>
+    </div>
+</div>
+
+<input type="checkbox" title="Navigation menu" class="navbar-toggler" />
+
+<div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
+    <nav class="nav flex-column">
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
+            </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="counter">
+                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Counter
+            </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="weather">
+                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Weather
+            </NavLink>
+        </div>
+       @if(!string.IsNullOrEmpty(AppState.UserName))
+       {
+            <div class="nav-item px-3">
+                <button @onclick="LogOut">
+                    <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> LogOut
+                </button>
+            </div>
+       }
+    </nav>
+</div>
+
+@code
+{
+    protected override void OnInitialized()
+    {
+        AppState.OnChange += OnAppStateChanged; // Ensure the component re-renders to reflect the current user state
+    }
+    private async void OnAppStateChanged()
+    {
+        await InvokeAsync(StateHasChanged); 
+    }   
+    private async void LogOut()
+    {
+      AppState.ClearUser(); // Clear user info from application state
+      
+     navManager.NavigateTo("/login");
+
+    }
+    public void Dispose()
+    {
+        AppState.OnChange -= OnAppStateChanged; // Unsubscribe to prevent memory leaks
+    }   
+}

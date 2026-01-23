@@ -1,0 +1,21 @@
+﻿@page "/js-custom"
+@inject IJSRuntime JS
+@rendermode InteractiveServer
+<h3>JsCustomDemo</h3>
+<button class="btn btn-primary" @onclick="CallJs">Call Custom JS Function</button>
+<button class="btn btn-primary" @onclick="CallAddJs">Call AddJs Function</button>
+<p>Result:@result</p>
+
+@code {
+    private int result=0;
+    private async Task CallJs()
+    {
+        await JS.InvokeVoidAsync("showMessage", "Hello from .Net Blazor to Custom JS Function!");
+    }
+    private async Task CallAddJs()
+    {
+       result =await JS.InvokeAsync<int>("addNumbers", 5, 10);
+    }
+
+
+}

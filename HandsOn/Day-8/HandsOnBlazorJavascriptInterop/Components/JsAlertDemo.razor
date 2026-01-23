@@ -1,0 +1,11 @@
+﻿@page "/js-alert"
+@inject IJSRuntime JS // JavaScript interop service
+@rendermode InteractiveServer
+<h3>.Net - Javascript Interop(Alert)</h3>
+<button class="btn btn-primary" @onclick="ShowAlert">Click Alert</button>
+@code {
+    private async Task ShowAlert()
+    {
+        await JS.InvokeVoidAsync("alert", "Hello from .Net Blazor!");
+    }   
+}

@@ -1,0 +1,31 @@
+﻿@inject IJSRuntime JSRuntime
+@page "/interop-demo"
+@rendermode InteractiveServer
+<h3>InteropDemo</h3>
+<button class="btn btn-primary" @onclick="CallJsFunction">Call JavaScript Function</button>
+<button class="btn btn-secondary" @onclick="CallAddFunction">Add Numbers via JS</button>
+<p>Result from JS Add Function: @result</p>
+@code {
+    private IJSObjectReference? module; // Reference to the JS module
+    private int result;
+    //invoked after component has been rendered
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(firstRender)
+        {
+            // Import the JavaScript module
+            module = await JSRuntime.InvokeAsync<IJSObjectReference>("import", 
+            "./Components/InteropDemo.razor.js");
+        }
+    }
+    private async Task CallJsFunction()
+    {
+        // Call the JavaScript function from the module
+        await module!.InvokeVoidAsync("showAlert", "Hello from Blazor via JS Module!");
+    }
+    private async Task CallAddFunction()
+    {
+        result = await module!.InvokeAsync<int>("add", 5, 10);
+        await module!.InvokeVoidAsync("showAlert", result);
+    }
+}

@@ -1,0 +1,78 @@
+﻿@page "/long-task"
+@implements IDisposable
+@inject NavigationManager Navigation
+@rendermode InteractiveServer
+<h3>Long Running Task Demo</h3>
+
+<p>Status: <strong>@Status</strong></p>
+
+<button @onclick="NavigateAway">Navigate Away</button>
+@code {
+    private CancellationTokenSource _cts = new();
+    private string Status = "Starting task...";
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            await StartLongRunningWork(_cts.Token);
+        }
+        catch (TaskCanceledException)
+        {
+            Status = "Task cancelled due to navigation.";
+            Console.WriteLine(Status);
+        }
+    }
+
+    private async Task StartLongRunningWork(CancellationToken token)
+    {
+        // Simulate API call
+        Status = "Calling API...";
+        await Task.Delay(3000, token);
+
+        // Simulate background work
+        for (int i = 1; i <= 10; i++)
+        {
+            token.ThrowIfCancellationRequested();
+
+            Status = $"Processing step {i}/10";
+            await Task.Delay(1000, token);
+        }
+
+        Status = "Task completed successfully.";
+    }
+
+    private void NavigateAway()
+    {
+        Navigation.NavigateTo("/dashboard");
+    }
+
+    public void Dispose()
+    {
+        _cts.Cancel();
+        _cts.Dispose();
+    }
+}
+@* When Page Loads
+===================
+
+OnInitializedAsync() runs
+
+CancellationTokenSource is created
+
+Long task begins execution
+
+When User Navigates Away
+========================
+
+Component is removed from render tree
+
+Dispose() is called automatically
+
+_cts.Cancel() fires
+
+Task throws TaskCanceledException
+
+Task stops immediately
+
+No UI updates occur *@

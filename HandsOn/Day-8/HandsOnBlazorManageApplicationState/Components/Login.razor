@@ -1,0 +1,22 @@
+﻿@page "/login"
+@inject NavigationManager NavigationManager
+@inject HandsOnBlazorManageApplicationState.Services.AppState AppState
+@rendermode InteractiveServer
+<h3>Login</h3>
+<input placeholder="Username" @bind="username" />
+<select @bind="role">
+    <option value="">Select Role</option>
+    <option value="Admin">Admin</option>
+    <option value="User">User</option>
+</select>
+<button @onclick="ValidateUser">Login</button>
+
+@code {
+    private string username;
+    public string role;
+    void ValidateUser()
+    {
+        AppState.SetUser(username, role); // Store user info in application state
+        NavigationManager.NavigateTo("/dashboard");
+    }
+}

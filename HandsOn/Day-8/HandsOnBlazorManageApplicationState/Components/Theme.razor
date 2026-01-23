@@ -1,0 +1,44 @@
+﻿@page "/theme"
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+@inject ProtectedSessionStorage SessionStorage
+@rendermode InteractiveServer
+@inject NavigationManager NavigationManager
+<h3>ProtectedSession Storage Demo</h3>
+<p>Current Theme: @_theme</p>
+<button @onclick="SetDarkTheme" class="bnt btn-dark me-2">Set Theme to Dark</button>
+<button @onclick="SetLightTheme" class="bnt btn-light me-2">Set Theme to Light</button>
+<button @onclick="ClearTheam" class="bnt btn-secondary">Clear Theme</button>
+<button class="btn btn-link ms-2" @onclick='() => NavigationManager.NavigateTo("/showtheme")'>Show Theme Page</button>
+
+
+
+@code {
+    private string _theme = "Not Set";
+    protected override async Task OnAfterRenderAsync(bool firstRender) // Lifecycle method to run after component rendering
+    {
+        if (firstRender)
+        {
+            var result = await SessionStorage.GetAsync<string>("theme"); // Retrieve theme from ProtectedSessionStorage
+            if (result.Success && !string.IsNullOrEmpty(result.Value))
+            {
+                _theme = result.Value;
+                await InvokeAsync(StateHasChanged); // Update UI
+            }
+        }
+    }
+    private async Task SetDarkTheme()
+    {
+        _theme = "Dark";
+        await SessionStorage.SetAsync("theme", _theme);// Store theme in ProtectedSessionStorage
+    }
+    private async Task SetLightTheme()
+    {
+        _theme = "Light";
+        await SessionStorage.SetAsync("theme", _theme);// Store theme in ProtectedSessionStorage
+    }
+    private async Task ClearTheam()
+    {
+        await SessionStorage.DeleteAsync("theme"); // Clear theme from ProtectedSessionStorage
+        _theme = "Not Set";
+    }
+}
