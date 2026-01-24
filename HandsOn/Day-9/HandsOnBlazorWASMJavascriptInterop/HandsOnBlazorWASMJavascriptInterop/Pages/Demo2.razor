@@ -1,0 +1,24 @@
+﻿@page "/demo2"
+@inject IJSRuntime JS
+<h3>Demo2</h3>
+<button @onclick="CallJsAlert">Click me to see JS Alert</button>
+<button @onclick="CallNotifyJs">Click me to call Notify JS Function</button>
+<button @onclick="CallAddJs">Click me to call Add JS Function</button>
+<p>Result from Add JS Function: @result</p>
+<p>@message</p>
+@code {
+    private int result;
+    private string message="";
+    private async Task CallJsAlert()
+    {
+        await JS.InvokeVoidAsync("alert", "Hello from Blazor WebAssembly!");
+    }
+    private async Task CallNotifyJs()
+    {
+        message = await JS.InvokeAsync<string>("CallbackNotifyJs");
+    }
+    private async Task CallAddJs()
+    {
+        result=await JS.InvokeAsync<int>("CallbackAddJs",23,12);
+    }
+}

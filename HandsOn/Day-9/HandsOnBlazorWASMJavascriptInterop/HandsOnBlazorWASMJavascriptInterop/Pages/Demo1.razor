@@ -1,0 +1,11 @@
+﻿@page "/demo1"
+@inject IJSRuntime JS
+<h3>Demo1</h3>
+<button @onclick="CallJsAlert">Click me to see JS Alert</button>
+
+@code {
+    private async Task CallJsAlert()
+    {
+        await JS.InvokeVoidAsync("alert", "Hello from Blazor WebAssembly!");
+    }   
+}

@@ -1,10 +1,10 @@
-﻿window.callNofityInstance = function (dotNetRef) {
+﻿window.callNofityInstance = async function (dotNetRef) {
     dotNetRef.invokeMethodAsync(
         "Nofity",
         "Hello from Javascript!!"
     );
-}
-window.callAddInstance = function (dotNetRef) {
+};
+window.callAddInstance = async function(dotNetRef) {
     const result = await dotNetRef.invokeMethodAsync(
         "Add",
         10,
@@ -12,4 +12,4 @@ window.callAddInstance = function (dotNetRef) {
     );
     console.log("Result from .Net Instance", result);
     return result;
-}
+};

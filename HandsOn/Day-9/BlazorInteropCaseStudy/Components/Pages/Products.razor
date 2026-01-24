@@ -1,0 +1,19 @@
+﻿@page "/products"
+@rendermode InteractiveServer
+<h3>Products</h3>
+
+<ul>
+    @foreach (var product in products)
+    {
+        <li>@product</li>
+    }
+</ul>
+
+@code {
+    private List<string> products = new()
+    {
+        "Laptop",
+        "Keyboard",
+        "Mouse"
+    };
+}

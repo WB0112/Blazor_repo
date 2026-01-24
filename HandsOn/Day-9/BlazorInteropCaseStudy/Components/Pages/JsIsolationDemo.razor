@@ -1,0 +1,31 @@
+﻿@page "/js-isolation"
+@inject IJSRuntime JS
+@rendermode InteractiveServer
+<h3>JavaScript Isolation</h3>
+
+<button class="btn btn-success" @onclick="Show">
+    Call Isolated JS
+</button>
+
+@code {
+    private IJSObjectReference? module;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            module = await JS.InvokeAsync<IJSObjectReference>(
+                "import",
+                "/js/isolatedInterop.js"
+            );
+        }
+    }
+
+    private async Task Show()
+    {
+        await module!.InvokeVoidAsync(
+            "showMessage",
+            "Hello from isolated JS"
+        );
+    }
+}

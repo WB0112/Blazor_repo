@@ -1,0 +1,30 @@
+﻿@page "/js-interop"
+@inject IJSRuntime JS
+@rendermode InteractiveServer
+<h3>JavaScript Interop</h3>
+
+<button class="btn btn-primary" @onclick="CallJs">
+    .NET → JavaScript
+</button>
+
+<button class="btn btn-secondary ms-2" @onclick="CallDotNet">
+    JavaScript → .NET (Static)
+</button>
+
+@code {
+    private async Task CallJs()
+    {
+        await JS.InvokeVoidAsync(
+            "alert",
+            "Hello from Blazor"
+        );
+    }
+
+    private async Task CallDotNet()
+    {
+        await JS.InvokeVoidAsync(
+            "callStaticDotNet"
+        );
+        StateHasChanged();
+    }
+}
