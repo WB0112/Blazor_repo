@@ -1,0 +1,10 @@
+﻿@inject IJSRuntime JS
+@rendermode InteractiveServer
+<h3>JsInterop</h3>
+<button @onclick="ShowAlert">Alert</button>
+@code {
+    async Task ShowAlert()
+    {
+        await JS.InvokeVoidAsync("alert", "Hello from Blazor!");
+    }   
+}

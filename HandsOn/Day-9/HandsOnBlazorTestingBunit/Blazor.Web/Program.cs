@@ -6,6 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 builder.Services.AddScoped<Blazor.Web.Services.IProductService, Blazor.Web.Services.ProductService>();
+builder.Services.AddScoped<Blazor.Web.Services.CounterService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

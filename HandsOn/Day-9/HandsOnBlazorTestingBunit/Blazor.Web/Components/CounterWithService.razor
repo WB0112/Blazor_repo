@@ -1,0 +1,9 @@
+﻿@inject Blazor.Web.Services.CounterService CounterService
+<h3>CounterWithService</h3>
+<p>@CounterService.CurrentCount</p>
+<button class="btn btn-primary" @onclick="CounterService.IncrementCount">
+    Increment
+</button>
+@code {
+
+}

@@ -1,0 +1,22 @@
+﻿<h3>UserForm</h3>
+<EditForm Model="@user" OnValidSubmit="Submit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <div>
+        <label>Name:</label>    
+        <InputText @bind-Value="user.Name" />
+    </div>
+    <button type="submit">Submit</button>
+</EditForm>
+@code {
+    UserModel user = new UserModel();
+    void Submit()
+    {
+        
+    }
+    public class UserModel
+    {
+        public string Name { get; set; } = string.Empty;
+
+    }
+}
