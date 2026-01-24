@@ -1,0 +1,22 @@
+﻿@inject Blazor.Web.Services.IProductService ProductService
+<h3>ProductList</h3>
+<ul>
+    @foreach (var product in products)
+    {
+        <li>@product</li>
+    }
+</ul>
+
+@code {
+    private List<string> products = new List<string>();
+    // protected override void OnInitialized()
+    // {
+    //     // products.Add("Laptop");
+    //     // products.Add("Mouse");
+    //     // products.Add("Keyboard");
+    // }
+    protected override async Task OnInitializedAsync()
+    {
+        products = await ProductService.GetProductsAsync();
+    }
+}

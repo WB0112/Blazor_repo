@@ -16,7 +16,7 @@ public class CartServiceTests
         {
             Name = "Laptop",
             Price = 100m,
-            Quantity = 2
+            Quantity = 3
         });
 
         cartService.AddItem(new CartItem
