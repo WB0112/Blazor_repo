@@ -1,0 +1,42 @@
+﻿@using System.Text.Json
+@using System.Text
+@inject IJSRuntime JS
+@inject HttpClient Http
+
+<h3>Push Notifications</h3>
+
+<button @onclick="EnablePush">Enable Push Notifications</button>
+
+@code {
+    private IJSObjectReference? _module;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            _module = await JS.InvokeAsync<IJSObjectReference>(
+                "import", "./pushNotifications.js");
+        }
+    }
+
+    private async Task EnablePush()
+    {
+        var permission = await JS.InvokeAsync<string>(
+            "Notification.requestPermission");
+
+        if (permission != "granted")
+            return;
+
+        var vapidPublicKey = "BNP3R8YTFYIs9BEx6OzPFZkN8n3mVh5ccQMGimLlr5c7EB-Ph4HI0W8psD1WB8Fdq23zVDuEOzY8e2pN8fJg9ew";
+
+        var subscription = await _module!.InvokeAsync<object>(
+            "subscribe", vapidPublicKey);
+
+        var json = JsonSerializer.Serialize(subscription);
+
+        await  Http.PostAsJsonAsync(
+"https://localhost:7232/api/push/subscribe",
+subscription
+);
+    }
+}

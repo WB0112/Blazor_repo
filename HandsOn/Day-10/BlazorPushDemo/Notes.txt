@@ -1,0 +1,47 @@
+﻿1.
+Scenario
+A Blazor WASM PWA that:
+
+Asks user permission for notifications
+
+Registers a Service Worker
+
+Subscribes to Web Push
+
+Sends subscription to ASP.NET Core API
+
+Backend sends push notification
+
+Notification appears even when app is closed
+2.
+BlazorPushDemo/
+│
+├── Client (Blazor WASM PWA)
+│   ├── wwwroot/
+│   │   ├── service-worker.js
+│   │   ├── pushNotifications.js
+│   │   └── manifest.json
+│   ├── Pages/
+│   │   └── Push.razor
+│   └── Program.cs
+│
+└── Server (ASP.NET Core API)
+    ├── Controllers/PushController.cs
+    ├── Models/PushSubscriptionModel.cs
+    └── Program.cs
+
+3.Create Blazor WASM PWA
+4. Service Worker (Core of Push Notifications)
+
+📄 wwwroot/service-worker.js
+5. JavaScript Push Helper
+
+📄 wwwroot/pushNotifications.js
+7. Blazor UI (Push.razor)
+
+📄 Pages/Push.razor
+8. ASP.NET Core Backend
+8.1 Install Web Push Package
+8.2 Subscription Model
+8.3 Push Controller
+9. Generate VAPID Keys
