@@ -1,0 +1,33 @@
+﻿@page "/products"
+@using BlazorShop.PWA.Models
+@using BlazorShop.PWA.Services
+@inject ProductService ProductService
+
+
+<h3>Products</h3>
+
+
+@if (products == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <ul>
+        @foreach (var product in products)
+        {
+            <li>@product.Name - @product.Price</li>
+        }
+    </ul>
+}
+
+
+@code {
+    private List<Product>? products;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        products = await ProductService.GetProductsAsync();
+    }
+}
