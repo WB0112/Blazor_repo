@@ -21,7 +21,7 @@ namespace ProductAPI
             builder.Services.AddDbContext<DbAccess.AppDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
             builder.Services.AddControllers();
-            //enable cors
+            //configure  cors
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("AllowAllOrigins", policy =>
@@ -62,7 +62,7 @@ namespace ProductAPI
                 app.UseDeveloperExceptionPage();
                 app.MapOpenApi();
             }
-            app.UseCors("AllowAllOrigins");
+            app.UseCors("AllowAllOrigins");//enable cors
             app.UseAuthentication();
             app.UseAuthorization();
             app.MapControllers();

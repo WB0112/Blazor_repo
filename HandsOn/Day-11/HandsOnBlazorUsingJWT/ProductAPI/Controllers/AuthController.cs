@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using ProductAPI.Models;
@@ -22,6 +23,7 @@ namespace ProductAPI.Controllers
         }
 
         [HttpPost("login")]
+        [AllowAnonymous]// Allow anonymous access to this endpoint
         public async Task<IActionResult> Login(LoginDto dto)
         {
             var user = await _userService.AuthenticateAsync(dto.Email, dto.Password);

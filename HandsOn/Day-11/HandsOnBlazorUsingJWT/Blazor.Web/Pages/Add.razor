@@ -2,7 +2,9 @@
 @inject HttpClient Http
 @inject NavigationManager Navigation
 @using Blazor.Web.Models
+@using Microsoft.AspNetCore.Authorization
 @inject ApiClient ApiClient
+@attribute [Authorize(Roles="Admin")]
 <h3>Add</h3>
 <EditForm Model="newProduct" OnValidSubmit="AddProduct">
     <DataAnnotationsValidator />

@@ -17,7 +17,7 @@
     {
         var response = await Http.PostAsJsonAsync(
             "http://localhost:5289/api/auth/login",
-            new { Email = "user@gmail.com", Password = "user123" });
+            new { Email = "admin@gmail.com", Password = "admin123" });
         Console.WriteLine(response);
         var result = await response.Content.ReadFromJsonAsync<TokenResponse>();
         Console.WriteLine(result!.Token);

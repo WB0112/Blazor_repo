@@ -30,7 +30,7 @@ else
      [Parameter] public int id { get; set; }
     protected override async Task OnInitializedAsync()
     {
-        product = await ApiClient.GetAsync<Product>($"api/product/{id}");
+        product = await ApiClient.GetAsync<Product>($"api/product/get/{id}");
     }
 
     private async Task UpdateProduct()
