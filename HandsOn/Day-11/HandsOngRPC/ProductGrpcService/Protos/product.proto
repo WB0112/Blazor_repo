@@ -1,17 +1,20 @@
 syntax = "proto3"; // Specifies the version of Protocol Buffers being used
-
+//What is the purpose of product.proto file?
+// The product.proto file defines the structure of the gRPC service and messages for handling product-related operations.
 option csharp_namespace = "ProductGrpcService"; // Defines the C# namespace for the generated code
 
-package product;
-
+package product; // Defines the package name for the protobuf messages and services
+// Defines the ProductService with a GetProduct RPC method
 service ProductService {
+	//what is rpc
+	// RPC (Remote Procedure Call) is a protocol that allows a program to request a service from a program located on another computer in a network.
   rpc GetProduct (ProductRequest) returns (ProductReply);
 }
-
+// Defines the request message for GetProduct
 message ProductRequest {
   int32 id = 1;
 }
-
+// Defines the reply message for GetProduct
 message ProductReply {
   int32 id = 1;
   string name = 2;

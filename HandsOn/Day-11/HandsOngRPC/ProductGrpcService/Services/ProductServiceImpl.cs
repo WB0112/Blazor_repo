@@ -1,7 +1,7 @@
 ﻿using Grpc.Core;
 namespace ProductGrpcService.Services;
-
-public class ProductServiceImpl : ProductService.ProductServiceBase
+// Inherit from the generated base class for the gRPC service
+public class ProductServiceImpl : ProductService.ProductServiceBase // When inheriting from a base class, use the 'Base' suffix
 {
     public override Task<ProductReply> GetProduct(
         ProductRequest request,
