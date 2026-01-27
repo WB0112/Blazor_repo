@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="BlazorGrpcClient/BlazorGrpcClient.csproj" />
+  <Project Path="ProductGrpcService/ProductGrpcService.csproj" />
+</Solution>

@@ -1,0 +1,19 @@
+syntax = "proto3"; // Specifies the version of Protocol Buffers being used
+
+option csharp_namespace = "ProductGrpcService"; // Defines the C# namespace for the generated code
+
+package product;
+
+service ProductService {
+  rpc GetProduct (ProductRequest) returns (ProductReply);
+}
+
+message ProductRequest {
+  int32 id = 1;
+}
+
+message ProductReply {
+  int32 id = 1;
+  string name = 2;
+  double price = 3;
+}

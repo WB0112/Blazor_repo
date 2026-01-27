@@ -1,0 +1,38 @@
+﻿@using Blazor.Web.Models
+@using Microsoft.AspNetCore.Components.Authorization
+@inject HttpClient Http
+@inject JwtTokenService TokenService
+@inject AuthenticationStateProvider AuthProvider
+@inject NavigationManager Nav
+
+<button @onclick="Validate">Login</button>
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <p style="color:red">@errorMessage</p>
+}
+
+@code {
+    private string errorMessage = "";
+    async Task Validate()
+    {
+        var response = await Http.PostAsJsonAsync(
+            "http://localhost:5289/api/auth/login",
+            new { Email = "user@gmail.com", Password = "user123" });
+        Console.WriteLine(response);
+        var result = await response.Content.ReadFromJsonAsync<TokenResponse>();
+        Console.WriteLine(result!.Token);
+        if (result!.Token == "")
+        {
+            errorMessage = "Invalid login attempt.";
+            Console.WriteLine("Token is null");
+            return;
+        }
+        else
+        {
+            await TokenService.SetTokenAsync(result!.Token);
+            // Notify the authentication state provider
+            //((JwtAuthStateProvider)AuthProvider).NotifyUserAuthentication();
+            Nav.NavigateTo("/getall");
+        }
+    }
+}

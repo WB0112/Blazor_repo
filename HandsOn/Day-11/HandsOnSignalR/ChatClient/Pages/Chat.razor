@@ -1,0 +1,15 @@
+﻿@page "/chat"
+@implements IAsyncDisposable
+
+<h3>SignalR Chat</h3>
+
+<input @bind="user" placeholder="Your name" />
+<input @bind="message" placeholder="Message" />
+<button @onclick="Send">Send</button>
+
+<ul>
+    @foreach (var msg in messages)
+    {
+        <li>@msg</li>
+    }
+</ul>

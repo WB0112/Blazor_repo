@@ -1,0 +1,26 @@
+﻿@page "/product"
+@using ProductGrpcService
+@inject ProductService.ProductServiceClient Client
+@rendermode InteractiveServer
+<h3>Product</h3>
+
+<button class="btn btn-primary" @onclick="LoadProduct">
+    Load Product
+</button>
+
+@if (product != null)
+{
+    <p>@product.Name - ₹@product.Price</p>
+}
+
+@code {
+    ProductReply? product;
+
+    async Task LoadProduct()
+    {
+        product = await Client.GetProductAsync(
+            new ProductRequest { Id = 1 });
+       
+       
+    }
+}

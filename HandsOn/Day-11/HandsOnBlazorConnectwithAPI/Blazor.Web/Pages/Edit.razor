@@ -1,0 +1,42 @@
+﻿@page "/edit/{id:int}"
+@inject HttpClient Http
+@inject NavigationManager Navigation
+@using Blazor.Web.Models
+@inject ApiClient ApiClient
+<h3>Edit</h3>
+@if (product == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <EditForm Model="product" OnValidSubmit="UpdateProduct">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <InputText id="name" class="form-control" @bind-Value="product.Name" />
+        </div>
+        <div class="form-group">
+            <label for="price">Price:</label>
+            <InputNumber id="price" class="form-control" @bind-Value="product.Price" />
+        </div>
+        <button type="submit" class="btn btn-primary">Update</button>
+    </EditForm>
+}
+
+@code {
+    private Product? product;
+     [Parameter] public int id { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        product = await ApiClient.GetAsync<Product>($"api/product/{id}");
+    }
+
+    private async Task UpdateProduct()
+    {
+        await ApiClient.PutAsync($"api/product/{id}", product);
+        Navigation.NavigateTo("/getall");
+    }
+
+}

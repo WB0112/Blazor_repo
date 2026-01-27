@@ -1,0 +1,36 @@
+﻿@page "/add"
+@inject HttpClient Http
+@inject NavigationManager Navigation
+@using Blazor.Web.Models
+<h3>Add</h3>
+<EditForm Model="newProduct" OnValidSubmit="AddProduct">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+  @*   <div class="form-group">
+        <label for="id">Id:</label>
+        <InputNumber id="id" class="form-control" @bind-Value="newProduct.Id" />
+    </div> *@
+    <div class="form-group">
+        <label for="name">Name:</label>
+        <InputText id="name" class="form-control" @bind-Value="newProduct.Name" />
+    </div>
+    <div class="form-group">
+        <label for="price">Price:</label>
+        <InputNumber id="price" class="form-control" @bind-Value="newProduct.Price" />
+    </div>
+    <button type="submit" class="btn btn-primary">Add</button>
+</EditForm>
+
+@code {
+    private Product newProduct = new Product();
+
+    private async Task AddProduct()
+    {
+        var response = await Http.PostAsJsonAsync("api/product", newProduct);
+        if (response.IsSuccessStatusCode)
+        {
+            Navigation.NavigateTo("/getall");
+        }
+    }
+
+}
