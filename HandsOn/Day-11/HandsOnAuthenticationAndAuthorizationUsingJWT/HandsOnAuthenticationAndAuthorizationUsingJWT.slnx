@@ -1,4 +1,0 @@
-<Solution>
-  <Project Path="../HandsOnBlazorConnectwithAPI/Blazor.Web/Blazor.Web.csproj" />
-  <Project Path="../HandsOnBlazorConnectwithAPI/ProductAPI/ProductAPI.csproj" />
-</Solution>

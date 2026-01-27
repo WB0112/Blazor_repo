@@ -14,14 +14,14 @@ namespace ProductAPI.Controllers
             _productService = productService;
         }
         [HttpGet]
-        [Authorize(Roles = "Admin,User")]
+       // [Authorize(Roles = "Admin,User")]
         public async Task<IActionResult> GetAllProducts()
         {
             var products = await _productService.GetAllProductsAsync();
             return Ok(products);
         }
-        [HttpGet("{id}")]
-        [Authorize]
+        [HttpGet("get/{id}")]
+       // [Authorize]
         public async Task<IActionResult> GetProductById(int id)
         {
             var product = await _productService.GetProductByIdAsync(id);
@@ -32,14 +32,14 @@ namespace ProductAPI.Controllers
             return Ok(product);
         }
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateProduct([FromBody] Models.Product product)
         {
             await _productService.CreateProductAsync(product);
             return CreatedAtAction(nameof(GetProductById), new { id = product.Id }, product);
         }
         [HttpPut("{id}")]
-        [Authorize(Roles = "Admin")]
+       // [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateProduct(int id, [FromBody] Models.Product product)
         {
             if (id != product.Id)
@@ -50,7 +50,7 @@ namespace ProductAPI.Controllers
             return NoContent();
         }
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Admin")]
+       // [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteProduct(int id)
         {
             await _productService.DeleteProductAsync(id);
