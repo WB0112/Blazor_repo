@@ -2,15 +2,17 @@
 @inject IJSRuntime JS
 
 <h3>Polar Area Chart – BlazorExpress.ChartJS</h3>
+<div style="width: 400px; height: 400px;">
+    <canvas id="polarChart"></canvas>
+</div>
 
-<canvas id="polarChart" width="400" height="400"></canvas>
 
 @code {
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
-            await JS.InvokeVoidAsync("renderPolarChart");
+            await JS.InvokeVoidAsync("renderPolarChart");// Call the JavaScript function to render the polar area chart
         }
     }
 }
