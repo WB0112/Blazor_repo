@@ -1,0 +1,40 @@
+﻿@page "/dashboard-dynamic"
+@inject IJSRuntime JS
+
+<h3>📊 Dynamic Chart Dashboard</h3>
+
+<label><b>Select Chart Type:</b></label>
+
+<select class="form-select w-25 mb-3" @onchange="OnChartTypeChanged">
+    <option value="bar">Bar</option>
+    <option value="line">Line</option>
+    <option value="pie">Pie</option>
+    <option value="doughnut">Doughnut</option>
+    <option value="polarArea">Polar Area</option>
+    <option value="radar">Radar</option>
+    <option value="scatter">Scatter</option>
+    <option value="bubble">Bubble</option>
+</select>
+
+<div style="width:400px; height:300px;">
+    <canvas id="dynamicChart"></canvas>
+</div>
+
+@code {
+
+    private string selectedChartType = "bar";
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JS.InvokeVoidAsync("renderDynamicChart", selectedChartType);
+        }
+    }
+
+    private async Task OnChartTypeChanged(ChangeEventArgs e)
+    {
+        selectedChartType = e.Value?.ToString() ?? "bar";
+        await JS.InvokeVoidAsync("renderDynamicChart", selectedChartType);
+    }
+}

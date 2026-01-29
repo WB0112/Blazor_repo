@@ -1,0 +1,37 @@
+﻿@using BlazorAzureOpenAI.Services
+@using Azure.AI.OpenAI
+
+@inject OpenAIService AI
+
+<h3>AI ChatBot</h3>
+
+<input @bind="userInput" class="form-control" />
+<button class="btn btn-success mt-2" @onclick="Send">Send</button>
+
+<ul class="mt-3">
+    @foreach (var msg in history)
+    {
+        <li>
+            <b>@msg.Role:</b>
+            @msg.Content[0].Text
+        </li>
+    }
+</ul>
+
+@code {
+    string userInput;
+
+    List<Chatm> history = new()
+    {
+        ChatMessage.FromSystem("You are a helpful assistant.")
+    };
+
+    async Task Send()
+    {
+        if (string.IsNullOrWhiteSpace(userInput))
+            return;
+
+        await AI.ChatAsync(history, userInput);
+        userInput = string.Empty;
+    }
+}   

@@ -1,0 +1,78 @@
+﻿@page "/dynamic-charts"
+@using BlazorWASMSyncfusionCharts.Data
+
+<h3>Dynamic Chart Type Switching</h3>
+
+<!-- CHART TYPE SELECTOR -->
+<select class="form-select w-25 mb-3" @onchange="OnChartTypeChanged">
+    @foreach (var type in Enum.GetValues<ChartTypeOption>())
+    {
+        <option value="@type">@type</option>
+    }
+</select>
+
+<SfChart Title="Runtime Chart Switching Demo"
+         Width="100%"
+         Height="450px">
+
+    <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" Title="Month" />
+    <ChartPrimaryYAxis Title="Revenue" LabelFormat="{value}M" />
+
+    <ChartSeriesCollection>
+
+        @if (SelectedChartType != ChartTypeOption.Mixed)
+        {
+            <ChartSeries DataSource="Data"
+                         XName="Month"
+                         YName="Revenue"
+                         Type="@GetSeriesType()"
+                         Size="@(SelectedChartType == ChartTypeOption.Bubble ? nameof(SalesData.BubbleSize) : null)">
+            </ChartSeries>
+        }
+        else
+        {
+            <!-- MIXED CHART -->
+            <ChartSeries DataSource="Data"
+                         XName="Month"
+                         YName="Revenue"
+                         Type="ChartSeriesType.Column"
+                         Name="Revenue" />
+
+            <ChartSeries DataSource="Data"
+                         XName="Month"
+                         YName="Growth"
+                         Type="ChartSeriesType.Line"
+                         Name="Growth %" />
+        }
+
+    </ChartSeriesCollection>
+</SfChart>
+
+@code {
+
+    ChartTypeOption SelectedChartType = ChartTypeOption.Line;
+
+    List<SalesData> Data = new()
+    {
+        new() { Month="Jan", Revenue=35, Growth=10, BubbleSize=5 },
+        new() { Month="Feb", Revenue=42, Growth=15, BubbleSize=7 },
+        new() { Month="Mar", Revenue=48, Growth=18, BubbleSize=9 },
+        new() { Month="Apr", Revenue=55, Growth=22, BubbleSize=12 },
+        new() { Month="May", Revenue=60, Growth=25, BubbleSize=15 }
+    };
+
+    void OnChartTypeChanged(ChangeEventArgs e)
+    {
+        SelectedChartType = Enum.Parse<ChartTypeOption>(e.Value!.ToString()!);
+    }
+
+    ChartSeriesType GetSeriesType() => SelectedChartType switch
+    {
+        ChartTypeOption.Line => ChartSeriesType.Line,
+        ChartTypeOption.Area => ChartSeriesType.Area,
+        ChartTypeOption.Bar => ChartSeriesType.Column,
+        ChartTypeOption.Scatter => ChartSeriesType.Scatter,
+        ChartTypeOption.Bubble => ChartSeriesType.Bubble,
+        _ => ChartSeriesType.Line
+    };
+}

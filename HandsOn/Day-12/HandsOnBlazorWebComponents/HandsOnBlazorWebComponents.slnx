@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="BlazroWASMWebComponent/BlazroWASMWebComponent.csproj" />
+  <Project Path="MVCHost/MVCHost.csproj" />
+</Solution>

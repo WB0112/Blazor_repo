@@ -1,0 +1,16 @@
+﻿@page "/dashboard"
+@inject IJSRuntime JS
+
+<h3>Polar Area Chart – BlazorExpress.ChartJS</h3>
+
+<canvas id="polarChart" width="400" height="400"></canvas>
+
+@code {
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JS.InvokeVoidAsync("renderPolarChart");
+        }
+    }
+}

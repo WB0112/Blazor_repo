@@ -1,0 +1,90 @@
+﻿@page "/charts"
+@using BlazorWASMSyncfusionCharts.Data
+@using Syncfusion.Blazor.Charts
+<h3>Syncfusion Charts – Complete Demo</h3>
+
+<SfChart Title="Company Performance Dashboard" Width="100%" Height="450px">
+
+    <!-- CATEGORY AXIS -->
+    <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category"
+                       Title="Month"
+                       LabelIntersectAction="LabelIntersectAction.Rotate45" />
+
+    <!-- NUMERIC AXIS -->
+    <ChartPrimaryYAxis Title="Revenue (in Millions)"
+                       LabelFormat="{value}M">
+        <!-- STRIPLINE -->
+        <ChartAxisStriplines>
+            <ChartStripline Start="40"
+                            End="60"
+                            Text="Target Zone"
+                            Color="#e6f4ff" />
+        </ChartAxisStriplines>
+    </ChartPrimaryYAxis>
+
+    <ChartSeriesCollection>
+
+        <!-- COLUMN CHART -->
+        <ChartSeries DataSource="Data"
+                     XName="Month"
+                     YName="Revenue"
+                     Type="ChartSeriesType.Column"
+                     Name="Revenue" />
+
+        <!-- LINE CHART -->
+        <ChartSeries DataSource="Data"
+                     XName="Month"
+                     YName="Growth"
+                     Type="ChartSeriesType.Line"
+                     Name="Growth %"
+                     YAxisName="SecondaryAxis" />
+
+        <!-- AREA CHART -->
+        <ChartSeries DataSource="Data"
+                     XName="Month"
+                     YName="Revenue"
+                     Type="ChartSeriesType.Area"
+                     Opacity="0.3"
+                     Name="Trend Area" />
+
+        <!-- SCATTER -->
+        <ChartSeries DataSource="Data"
+                     XName="Revenue"
+                     YName="Growth"
+                     Type="ChartSeriesType.Scatter"
+                     Name="Scatter View" />
+
+        <!-- BUBBLE -->
+        <ChartSeries DataSource="Data"
+                     XName="Month"
+                     YName="Revenue"
+                     Size="BubbleSize"
+                     Type="ChartSeriesType.Bubble"
+                     Name="Market Size" />
+
+    </ChartSeriesCollection>
+
+    <!-- SECONDARY AXIS -->
+    <ChartAxes>
+        <ChartAxis Name="SecondaryAxis"
+                   OpposedPosition="true"
+                   Title="Growth %"
+                   LabelFormat="{value}%"
+                   Minimum="0"
+                   Maximum="30"
+                   Interval="5" />
+    </ChartAxes>
+
+</SfChart>
+
+@code {
+
+    List<SalesData> Data = new()
+    {
+        new() { Month = "Jan", Revenue = 35, Growth = 10, Date = new(2024,1,1), BubbleSize = 5 },
+        new() { Month = "Feb", Revenue = 42, Growth = 14, Date = new(2024,2,1), BubbleSize = 7 },
+        new() { Month = "Mar", Revenue = 48, Growth = 18, Date = new(2024,3,1), BubbleSize = 9 },
+        new() { Month = "Apr", Revenue = 55, Growth = 22, Date = new(2024,4,1), BubbleSize = 12 },
+        new() { Month = "May", Revenue = 60, Growth = 26, Date = new(2024,5,1), BubbleSize = 15 }
+    };
+}

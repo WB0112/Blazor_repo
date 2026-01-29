@@ -1,4 +1,0 @@
-<Solution>
-  <Project Path="../MVCHost/MVCHost.csproj" Id="10aa1309-3713-43a2-b169-2b96f8b532a8" />
-  <Project Path="BlazorWebComponentsDemo.csproj" />
-</Solution>
